@@ -19,15 +19,14 @@ NAMES
 """
 # Project name to be used in urls
 # Use dashes, not underscores!
-PROJECT_SLUG = 'best-songs-2015-so-far'
-# PROJECT_SLUG = 'miller'
+PROJECT_SLUG = 'best-songs-2015'
 
 
 # Project name to be used in file paths
-PROJECT_FILENAME = 'bestsongs15_midyear'
+PROJECT_FILENAME = 'bestsongs15'
 
 # The name of the repository containing the source
-REPOSITORY_NAME = 'bestsongs15-midyear'
+REPOSITORY_NAME = 'bestsongs15'
 GITHUB_USERNAME = 'nprapps'
 REPOSITORY_URL = 'git@github.com:%s/%s.git' % (GITHUB_USERNAME, REPOSITORY_NAME)
 REPOSITORY_ALT_URL = None # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
@@ -99,13 +98,13 @@ DEBUG = True
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '1bR-KYOP7M5Y4DgEr4lvHwwEPIa3171FR5CIAr3PFagU'
+COPY_GOOGLE_DOC_KEY = '1M6MgAG5yG7wBxwcnFiWABmHi9Almg_SJCcmXXn2_rCc'
 COPY_PATH = 'data/copy.xlsx'
 
 """
 SONG DATA
 """
-SONGS_GOOGLE_DOC_KEY = '1Egm-N9uQBAAq6aEAZEJKB-iwd2TPlZFzHK9H2MHONbg'
+SONGS_GOOGLE_DOC_KEY = '1H2SnzHC65jHxVh1BVJAFYbCKqb-vcOxoxNMXI3GYhqs'
 SONGS_CSV_DATA_PATH = 'data/songs.csv'
 
 """
