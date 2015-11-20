@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+from datetime import datetime
+import json
+import os
+
+from boto.s3.key import Key
 from fabric.api import local, require, settings, task
 from fabric.state import env
 from termcolor import colored
@@ -93,14 +98,20 @@ def app(port='8000'):
     """
     Serve app.py.
     """
-    local('gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload app:wsgi_app' % port)
+    if env.settings:
+        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload app:wsgi_app'" % (env.settings, port))
+    else:
+        local('gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload app:wsgi_app' % port)
 
 @task
 def public_app(port='8001'):
     """
     Serve public_app.py.
     """
-    local('gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload public_app:wsgi_app' % port)
+    if env.settings:
+        local("DEPLOYMENT_TARGET=%s bash -c 'gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload public_app:wsgi_app'" % (env.settings, port))
+    else:
+        local('gunicorn -b 0.0.0.0:%s --timeout 3600 --debug --reload public_app:wsgi_app' % port)
 
 @task
 def tests():
@@ -126,7 +137,7 @@ def update():
     data.update()
 
 @task
-def deploy(remote='origin'):
+def deploy(remote='origin', reload=False):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
@@ -159,6 +170,7 @@ def deploy(remote='origin'):
     local('rm -rf www/live-data')
 
     flat.deploy_folder(
+        app_config.S3_BUCKET,
         'www',
         app_config.PROJECT_SLUG,
         headers={
@@ -168,6 +180,7 @@ def deploy(remote='origin'):
     )
 
     flat.deploy_folder(
+        app_config.S3_BUCKET,
         'www/assets',
         '%s/assets' % app_config.PROJECT_SLUG,
         headers={
@@ -175,6 +188,50 @@ def deploy(remote='origin'):
         }
     )
 
+    if reload:
+        reset_browsers()
+
+    if not check_timestamp():
+        reset_browsers()
+
+
+@task
+def check_timestamp():
+    require('settings', provided_by=[production, staging])
+
+    bucket = utils.get_bucket(app_config.S3_BUCKET)
+    k = Key(bucket)
+    k.key = '%s/live-data/timestamp.json' % app_config.PROJECT_SLUG
+    if k.exists():
+        return True
+    else:
+        return False
+
+@task
+def reset_browsers():
+    """
+    Deploy a timestamp so the client will reset their page. For bugfixes
+    """
+    require('settings', provided_by=[production, staging])
+
+    if not os.path.exists('www/live-data'):
+        os.makedirs('www/live-data')
+
+    payload = {}
+    now = datetime.now().strftime('%s')
+    payload['timestamp'] = now
+
+    with open('www/live-data/timestamp.json', 'w') as f:
+        json.dump(payload, f)
+
+    flat.deploy_folder(
+        app_config.S3_BUCKET,
+        'www/live-data',
+        '%s/live-data' % app_config.PROJECT_SLUG,
+        headers={
+            'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
+        }
+    )
 
 """
 Destruction
@@ -196,7 +253,7 @@ def shiva_the_destroyer():
     )
 
     with settings(warn_only=True):
-        flat.delete_folder(app_config.PROJECT_SLUG)
+        flat.delete_folder(app_config.S3_BUCKET, app_config.PROJECT_SLUG)
 
         if app_config.DEPLOY_TO_SERVERS:
             servers.delete_project()
@@ -206,4 +263,3 @@ def shiva_the_destroyer():
 
             if app_config.DEPLOY_SERVICES:
                 servers.nuke_confs()
-

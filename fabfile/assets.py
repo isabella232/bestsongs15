@@ -58,7 +58,7 @@ def sync():
 
         return
 
-    bucket = _assets_get_bucket()
+    bucket = utils.get_bucket(app_config.ASSETS_S3_BUCKET)
     keys = bucket.list(app_config.ASSETS_SLUG)
 
     which = None
