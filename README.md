@@ -3,7 +3,7 @@ Copyright 2015 NPR.  All rights reserved.  No part of these materials may be rep
 (Want to use this code? Send an email to nprapps@npr.org!)
 
 
-bestsongs15-midyear
+bestsongs15
 ========================
 
 * [What is this?](#what-is-this)
@@ -31,7 +31,7 @@ bestsongs15-midyear
 What is this?
 -------------
 
-**TKTK: Describe bestsongs15-midyear here.**
+**TKTK: Describe bestsongs15 here.**
 
 Assumptions
 -----------
@@ -84,8 +84,8 @@ curl https://npmjs.org/install.sh | sh
 Then bootstrap the project:
 
 ```
-cd bestsongs15-midyear
-mkvirtualenv bestsongs15-midyear
+cd bestsongs15
+mkvirtualenv bestsongs15
 pip install -r requirements.txt
 npm install
 fab update
@@ -274,7 +274,7 @@ Compile static assets
 Compile LESS to CSS, compile javascript templates to Javascript and minify all assets:
 
 ```
-workon bestsongs15-midyear
+workon bestsongs15
 fab render
 ```
 
@@ -370,34 +370,34 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|
 |--------|------|-----|-----|
-|bestsongs15-midyear|skip-intro|||
-|bestsongs15-midyear|render-ad|||
-|bestsongs15-midyear|songs-played||5|
-|bestsongs15-midyear|filter-panel-open|||
-|bestsongs15-midyear|filter-panel-close|||
-|bestsongs15-midyear|song-skip|`artist`-`title`||
-|bestsongs15-midyear|tag-finish|`selected-tag`||
-|bestsongs15-midyear|switch-tag|`selected-tag`||
-|bestsongs15-midyear|switch-tag-songs|`session-songs-played`||
-|bestsongs15-midyear|reviewer-deep-link|`selected-tag`||
-|bestsongs15-midyear|shuffle|||
-|bestsongs15-midyear|shuffle-clean|||
-|bestsongs15-midyear|explicit-language-on|||
-|bestsongs15-midyear|explicit-language-off|||
-|bestsongs15-midyear|continue-playback-click|||
-|bestsongs15-midyear|song-card-expand|||
-|bestsongs15-midyear|song-card-shrink|||
-|bestsongs15-midyear|show-history-click|||
-|bestsongs15-midyear|amazon-click|`song`||
-|bestsongs15-midyear|itunes-click|`song`||
-|bestsongs15-midyear|rdio-click|`song`||
-|bestsongs15-midyear|spotify-click|`song`||
-|bestsongs15-midyear|tweet|`location`||
-|bestsongs15-midyear|facebook|`location`||
-|bestsongs15-midyear|email|`location`||
-|bestsongs15-midyear|new-comment||
-|bestsongs15-midyear|share-discuss-open||
-|bestsongs15-midyear|share-discuss-close||
-|bestsongs15-midyear|summary-copied||
-|bestsongs15-midyear|featured-tweet-action|`action`|
-|bestsongs15-midyear|featured-facebook-action|`action`|
+|bestsongs15|skip-intro|||
+|bestsongs15|render-ad|||
+|bestsongs15|songs-played||5|
+|bestsongs15|filter-panel-open|||
+|bestsongs15|filter-panel-close|||
+|bestsongs15|song-skip|`artist`-`title`||
+|bestsongs15|tag-finish|`selected-tag`||
+|bestsongs15|switch-tag|`selected-tag`||
+|bestsongs15|switch-tag-songs|`session-songs-played`||
+|bestsongs15|reviewer-deep-link|`selected-tag`||
+|bestsongs15|shuffle|||
+|bestsongs15|shuffle-clean|||
+|bestsongs15|explicit-language-on|||
+|bestsongs15|explicit-language-off|||
+|bestsongs15|continue-playback-click|||
+|bestsongs15|song-card-expand|||
+|bestsongs15|song-card-shrink|||
+|bestsongs15|show-history-click|||
+|bestsongs15|amazon-click|`song`||
+|bestsongs15|itunes-click|`song`||
+|bestsongs15|rdio-click|`song`||
+|bestsongs15|spotify-click|`song`||
+|bestsongs15|tweet|`location`||
+|bestsongs15|facebook|`location`||
+|bestsongs15|email|`location`||
+|bestsongs15|new-comment||
+|bestsongs15|share-discuss-open||
+|bestsongs15|share-discuss-close||
+|bestsongs15|summary-copied||
+|bestsongs15|featured-tweet-action|`action`|
+|bestsongs15|featured-facebook-action|`action`|
