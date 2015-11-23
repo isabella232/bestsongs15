@@ -192,12 +192,6 @@ var onHashInit = function(newHash, oldHash) {
 
         simpleStorage.set('songs15MidYearSelectedTag', selectedTag);
 
-        if (buttonText[buttonText.length - 1] == 's') {
-            buttonText += '\u2019 Mixtape'
-        } else {
-            buttonText += '\u2019' + 's Mixtape';
-        }
-
         $('.go-wrapper a').html('Play ' + buttonText).addClass('small');
 
         hasher.setHash('');
@@ -301,12 +295,6 @@ var playIntroAudio = function() {
     inPreroll = true;
 
     if (!onWelcome) {
-        if (selectedTag[selectedTag.length - 1] == 's') {
-            introText += '\u2019 Mixtape'
-        } else {
-            introText += '\u2019' + 's Mixtape';
-        }
-
         $('.stack .poster').velocity('fadeIn');
         $('.stack .poster').find('.loading').text(introText).css('opacity',1);
         $skipsRemaining.hide();
@@ -327,26 +315,6 @@ var playIntroAudio = function() {
     }
 }
 
-/*
- * Generate a reader-friendly mixtape name.
- */
-var makeMixtapeName = function(song) {
-    var mixtapeName = null;
-
-    if (selectedTag !== song['reviewer']) {
-        if (_.contains(APP_CONFIG.REVIEWER_TAGS, song['reviewer'])) {
-            mixtapeName = song['reviewer'].split(' ')[0];
-
-            if (mixtapeName[mixtapeName.length - 11] == 's') {
-                mixtapeName += '&rsquo;';
-            } else {
-                mixtapeName += '&rsquo;' + 's';
-            }
-        }
-    }
-
-    return mixtapeName;
-}
 
 /*
  * Skip the welcome audio.
@@ -383,25 +351,9 @@ var playNextSong = function() {
         renderAd = false;
         adCounter++;
 
-        // if this is the first song in a curator playlist
-        // get one reviewed by the curator
         var nextSong = _.find(playlist, function(song) {
-            if (!firstReviewerSong) {
-                return !(_.contains(playedSongs, song['id']));
-            } else {
-                return !(_.contains(playedSongs, song['id'])) && song['reviewer'] === selectedTag;
-            }
+            return !(_.contains(playedSongs, song['id']));
         });
-
-        // some mixtape curators have not reviewed anything
-        // in this case, just use the normal filter
-        if (firstReviewerSong && !nextSong) {
-            var nextSong = _.find(playlist, function(song) {
-                return !(_.contains(playedSongs, song['id']));
-            });
-        }
-
-        firstReviewerSong = false;
 
         // check if we can play the song legally (4 times per 3 hours)
         // if we don't have a song, get a new playlist
@@ -410,9 +362,6 @@ var playNextSong = function() {
             if (!canPlaySong) {
                 return;
             }
-        } else {
-            nextPlaylist();
-            return;
         }
 
         var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
@@ -420,7 +369,6 @@ var playNextSong = function() {
 
     var context = $.extend(APP_CONFIG, nextSong, {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
-        'mixtapeName': makeMixtapeName(nextSong)
     });
 
     if (renderAd === true) {
@@ -574,28 +522,6 @@ var checkSongHistory = function(song) {
 
     return true;
 }
-
-/*
- * Get the next playlist when one is finished
- */
-var nextPlaylist = function() {
-    if (playedSongs.length == SONG_DATA.length) {
-        // if all songs have been played, reset to shuffle
-        resetState();
-    }
-
-    ANALYTICS.trackEvent('tag-finish', selectedTag);
-    var tag = null;
-
-    if (selectedTag === null || _.contains(APP_CONFIG.GENRE_TAGS, selectedTag)) {
-        // go to shuffle
-    } else {
-        tag = getNextReviewer();
-        firstReviewerSong = true;
-    }
-    switchTag(tag);
-}
-
 
 /*
  * Update the total songs played
@@ -838,7 +764,6 @@ var buildListeningHistory = function() {
 
         var context = $.extend(APP_CONFIG, song, {
             'showQuotes': song['title'].match(':') && song['title'].match('’') && song['title'].match('‘') ? false : true,
-            'mixtapeName': makeMixtapeName(song)
         });
 
         var html = JST.song(context);
@@ -989,15 +914,7 @@ var updateTagDisplay = function() {
         if (selectedTag == '\\m/ >_< \\m/') {
             tag = selectedTag;
         } else {
-            tag = selectedTag
-
-            if (_.contains(APP_CONFIG.REVIEWER_TAGS, selectedTag)) {
-                if (selectedTag[selectedTag.length - 1] == 's') {
-                    tag += '\u2019 Mixtape'
-                } else {
-                    tag += '\u2019' + 's Mixtape';
-                }
-            }
+            tag = selectedTag;
             tag = tag.toUpperCase();
         }
 
