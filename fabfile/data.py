@@ -32,14 +32,6 @@ def update():
     update_songs()
 
 @task
-def make_slugs():
-    get_document(app_config.SONGS_GOOGLE_DOC_KEY, app_config.SONGS_DATA_PATH)
-    data = copytext.Copy(app_config.SONGS_DATA_PATH)
-    for row in data['songs']:
-        composite = u'{0} {1}'.format(row['artist'], row['title'])
-        print slugify(composite)
-
-@task
 def update_songs(verify='true'):
     get_document(app_config.SONGS_GOOGLE_DOC_KEY, app_config.SONGS_DATA_PATH)
     data = copytext.Copy(app_config.SONGS_DATA_PATH)
@@ -78,16 +70,15 @@ def process_songs(data, verify):
         if song['artist']:
             song['artist'] = smartypants(song['artist'])
 
-        song['genre_tags'] = []
+        tags = []
 
-        for i in range(1,4):
-            key = 'genre%i' % i
+        for tag in song['genre_tags'].split(','):
+            tag = tag.strip()
+            if tag == 'Metal':
+                tag = '\m/ >_< \m/'
+            tags.append(tag)
 
-            if song[key]:
-                song['genre_tags'].append(song[key])
-
-            if key != 'genre1':
-                del song[key]
+        song['genre_tags'] = tags
 
         song['reviews'] = []
         for review in reviews:
