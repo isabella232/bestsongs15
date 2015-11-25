@@ -15,9 +15,16 @@
                     </ul>
                 </div>
 
-                <div class="review-wrapper">
-                    <p class="review"><%= review %></p>
-                </div>
+
+                <% for (var i = 0; i < reviews.length; i++) { %>
+
+                    <div class="review-wrapper">
+                        <p class="review"><%= reviews[i].review %></p>
+                        <p class="reviewer">Reviewed by <%= reviews[i].reviewer %></p>
+                        <% if (reviews[i].reviewer_affiliation !== null) { %><p class="affiliation"><%= reviews[i].reviewer_affiliation %></p><%}%>
+                    </div>
+                <% } %>
+
 
                 <ul class="song-tools list-unstyled">
                     <% if (ASIN) { %>
