@@ -93,8 +93,8 @@ COPY_PATH = 'data/copy.xlsx'
 """
 SONG DATA
 """
-SONGS_GOOGLE_DOC_KEY = '1H2SnzHC65jHxVh1BVJAFYbCKqb-vcOxoxNMXI3GYhqs'
-SONGS_CSV_DATA_PATH = 'data/songs.csv'
+SONGS_GOOGLE_DOC_KEY = '1yEre5xDvDzCk40PX9dfUPxnULfZBjIUsp8p-9tqFe0c'
+SONGS_DATA_PATH = 'data/songs.xlsx'
 
 """
 SHARING

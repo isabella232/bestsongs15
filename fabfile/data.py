@@ -3,24 +3,23 @@
 """
 Commands that update or process the application data.
 """
+import app_config
+import codecs
+import copytext
 import csv
-from datetime import datetime
 import json
 import os
-
-import codecs
-from fabric.api import task, local
-from facebook import GraphAPI
-from twitter import Twitter, OAuth
-from smartypants import smartypants
 import requests
-from rdioapi import Rdio
 import spotipy
 
-import app_config
-import copytext
-
-from oauth import get_credentials
+from datetime import datetime
+from fabric.api import task, local
+from facebook import GraphAPI
+from oauth import get_document
+from rdioapi import Rdio
+from slugify import slugify
+from smartypants import smartypants
+from twitter import Twitter, OAuth
 
 SONGS_SPREADSHEET_URL_TEMPLATE = 'https://docs.google.com/feeds/download/spreadsheets/Export?exportFormat=csv&key=%s'
 
@@ -33,127 +32,110 @@ def update():
     update_songs()
 
 @task
+def make_slugs():
+    get_document(app_config.SONGS_GOOGLE_DOC_KEY, app_config.SONGS_DATA_PATH)
+    data = copytext.Copy(app_config.SONGS_DATA_PATH)
+    for row in data['songs']:
+        composite = u'{0} {1}'.format(row['artist'], row['title'])
+        print slugify(composite)
+
+@task
 def update_songs(verify='true'):
-    credentials = get_credentials()
-    spreadsheet_url = SONGS_SPREADSHEET_URL_TEMPLATE % app_config.SONGS_GOOGLE_DOC_KEY
+    get_document(app_config.SONGS_GOOGLE_DOC_KEY, app_config.SONGS_DATA_PATH)
+    data = copytext.Copy(app_config.SONGS_DATA_PATH)
 
-    resp = app_config.authomatic.access(credentials, spreadsheet_url)
-
-    with codecs.open(app_config.SONGS_CSV_DATA_PATH, 'w', 'utf-8') as f:
-        f.write(resp.content)
-
-    output = clean_songs(verify == 'true')
+    output = process_songs(data, verify == 'true')
 
     with codecs.open('data/songs.json', 'w', 'utf-8') as f:
         json.dump(output, f)
 
 @task
-def clean_songs(verify):
+def process_songs(data, verify):
     output = []
     unique_audio = []
     unique_song_art = []
     unique_song_title = []
 
-    with open('data/songs.csv') as f:
-        rows = csv.DictReader(f)
+    songs = data['songs']._serialize()
+    reviews = data['reviews']._serialize()
 
-        for row in rows:
-            if row['retracted'] == '1':
-                print 'RETRACTED: %s - %s' % (row['artist'], row['title'])
-                continue
+    for song in songs:
+        for name, value in song.items():
+            try:
+                song[name] = value.strip()
+            except AttributeError:
+                pass
 
-            stripped_row = {}
+        print '%s - %s' % (song['artist'], song['title'])
 
-            for name, value in row.items():
-                try:
-                    stripped_row[name] = value.strip()
-                except AttributeError:
-                    print value
-                    raise
+        if song['song_art']:
+            name, ext = os.path.splitext(song['song_art'])
+            song['song_art'] = '%s-s500%s' % (name, ext)
 
-            row = stripped_row
+        if song['title']:
+            song['title'] = smartypants(song['title'])
 
-            print '%s - %s' % (row['artist'], row['title'])
+        if song['artist']:
+            song['artist'] = smartypants(song['artist'])
 
-            if row['song_art']:
-                name, ext = os.path.splitext(row['song_art'])
-                row['song_art'] = '%s-s500%s' % (name, ext)
+        song['genre_tags'] = []
 
-            if row['title']:
-                row['title'] = smartypants(row['title'])
+        for i in range(1,4):
+            key = 'genre%i' % i
 
-            if row['artist']:
-                row['artist'] = smartypants(row['artist'])
+            if song[key]:
+                song['genre_tags'].append(song[key])
 
-            if row['review']:
-                row['review'] = smartypants(row['review'])
+            if key != 'genre1':
+                del song[key]
 
+        song['reviews'] = []
+        for review in reviews:
+            if song['id'] == review['id']:
+                review['review'] = smartypants(review['review'])
+                song['reviews'].append(review)
+
+        if verify:
             # Verify links
-            if verify:
-                try:
-                    audio_link = 'http://pd.npr.org/anon.npr-mp3%s.mp3' % row['media_url']
-                    audio_request = requests.head(audio_link)
+            try:
+                audio_link = 'http://pd.npr.org/anon.npr-mp3%s.mp3' % song['media_url']
+                audio_request = requests.head(audio_link)
 
-                    if audio_request.status_code != 200:
-                        print '--> %s The audio URL is invalid: %s' % (audio_request.status_code, audio_link)
+                if audio_request.status_code != 200:
+                    print '--> %s The audio URL is invalid: %s' % (audio_request.status_code, audio_link)
 
-                    song_art_link = 'http://www.npr.org%s' % row['song_art']
-                    song_art_request = requests.head(song_art_link)
+                song_art_link = 'http://www.npr.org%s' % song['song_art']
+                song_art_request = requests.head(song_art_link)
 
-                    if song_art_request.status_code != 200:
-                        print '--> %s The song art URL is invalid: %s' % (song_art_request, song_art_link)
-                except:
-                    print '--> request.head failed'
-
-            row['genre_tags'] = []
-
-            for i in range(1,4):
-                key = 'genre%i' % i
-
-                if row[key]:
-                    row['genre_tags'].append(row[key])
-
-                if key != 'genre1':
-                    del row[key]
-
-            row['curator_tags'] = []
-
-            for i in range(1,7):
-                key = 'curator%i' % i
-
-                if row[key]:
-                    row['curator_tags'].append(row[key])
-
-                del row[key]
+                if song_art_request.status_code != 200:
+                    print '--> %s The song art URL is invalid: %s' % (song_art_request, song_art_link)
+            except:
+                print '--> request.head failed'
 
             # Verify tags
-            if verify:
-                for song_genre in row['genre_tags']:
-                    if song_genre not in app_config.GENRE_TAGS:
-                        print "--> Genre %s is not a valid genre" % (song_genre)
+            for song_genre in song['genre_tags']:
+                if song_genre not in app_config.GENRE_TAGS:
+                    print "--> Genre %s is not a valid genre" % (song_genre)
 
-                for song_curator in row['curator_tags']:
-                    if song_curator not in app_config.REVIEWER_TAGS:
-                        print "--> Genre %s is not a valid genre" % (song_curator)
+            if song['media_url'] in unique_audio:
+                print '--> Duplicate audio url: %s' % song['media_url']
+            else:
+                unique_audio.append(song['media_url'])
 
-                if row['media_url'] in unique_audio:
-                    print '--> Duplicate audio url: %s' % row['media_url']
-                else:
-                    unique_audio.append(row['media_url'])
+            if song['song_art'] in unique_song_art:
+                print '--> Duplicate song_art url: %s' % song['song_art']
+            else:
+                unique_song_art.append(song['song_art'])
 
-                if row['song_art'] in unique_song_art:
-                    print '--> Duplicate song_art url: %s' % row['song_art']
-                else:
-                    unique_song_art.append(row['song_art'])
+            if song['title'] in unique_song_title:
+                print '--> Duplicate title: %s' % song['title']
+            else:
+                unique_song_title.append(song['title'])
 
-                if row['title'] in unique_song_title:
-                    print '--> Duplicate title: %s' % row['title']
-                else:
-                    unique_song_title.append(row['title'])
-
-            output.append(row)
+        output.append(song)
 
     return output
+
 
 @task
 def generate_rdio_playlist():
