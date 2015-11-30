@@ -69,6 +69,11 @@ def process_songs(data, verify):
         if song['artist']:
             song['artist'] = smartypants(song['artist'])
 
+        if song['featured'] == 'True':
+            song['featured'] = True
+        else:
+            song['featured'] = False
+
         tags = []
 
         for tag in song['genre_tags'].split(','):
