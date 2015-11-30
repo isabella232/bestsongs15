@@ -1051,14 +1051,14 @@ h1,h2,h3,h4,h5,h6 {
 	letter-spacing: 0.1rem;
 	color: rgba(255,255,255,0.5);
 	display: inline-block;
-    display: none;
+    //display: none;
 }
 
 .song-tags {
 	clear: both;
 	margin-bottom: 0;
 	white-space: nowrap;
-	color: rgba(255,255,255,0.5);
+	color: rgba(255,255,255,0.4);
 	font-size: @font-size-base * 0.71;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
@@ -1084,10 +1084,11 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
     a {
-        border-width: 1px;
-        border-style: solid;
-        padding: 0.2rem 0.4rem;
-        .transition(all 0.2s ease-in-out);
+        //border-width: 1px;
+        //border-style: solid;
+        //padding: 0.2rem 0.4rem;
+        //.transition(all 0.2s ease-in-out);
+        color: rgba(255,255,255,0.8);
     }
 
     a:link,
@@ -1095,6 +1096,7 @@ h1,h2,h3,h4,h5,h6 {
         text-decoration: none;
     }
 
+    /*
     a[data-tag='Classical']         { background: transparent; border-color: @tag-1; color: @tag-1; }
     a[data-tag='Country/Americana'] { background: transparent; border-color: @tag-2; color: @tag-2; }
     a[data-tag='Electronic']        { background: transparent; border-color: @tag-3; color: @tag-3; }
@@ -1106,10 +1108,14 @@ h1,h2,h3,h4,h5,h6 {
     a[data-tag='Rock']              { background: transparent; border-color: @tag-9; color: lighten(@tag-9, 10%); }
     a[data-tag='\m/ >_< \m/']       { background: transparent; border-color: @tag-10; color: lighten(@tag-10, 10%); }
     a[data-tag='World']             { background: transparent; border-color: @tag-11; color: lighten(@tag-11, 10%); }
+    */
+
 
     .no-touch & {
         a:hover { color: #fff; }
 
+
+        /*
         a[data-tag='Classical']:hover         { background: @tag-1; }
         a[data-tag='Country/Americana']:hover { background: @tag-2; }
         a[data-tag='Electronic']:hover        { background: @tag-3; }
@@ -1121,7 +1127,10 @@ h1,h2,h3,h4,h5,h6 {
         a[data-tag='Rock']:hover              { background: @tag-9; }
         a[data-tag='\m/ >_< \m/']:hover       { background: @tag-10; }
         a[data-tag='World']:hover             { background: @tag-11; }
+        */
     }
+
+
 }
 
 .song.small .song-tags {
