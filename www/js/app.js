@@ -358,7 +358,7 @@ var playNextSong = function() {
     $playerArtist.html(nextSong['artist']);
     $playerTitle.html(nextSong['title']);
 
-    if (nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'] || renderAd === true) {
+    if (nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title']) {
         $playerTitle.addClass('no-quotes');
     } else {
         $playerTitle.removeClass('no-quotes');
