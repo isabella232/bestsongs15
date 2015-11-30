@@ -13,11 +13,10 @@ import requests
 import spotipy
 
 from datetime import datetime
-from fabric.api import task, local
+from fabric.api import task
 from facebook import GraphAPI
 from oauth import get_document
 from rdioapi import Rdio
-from slugify import slugify
 from smartypants import smartypants
 from twitter import Twitter, OAuth
 
