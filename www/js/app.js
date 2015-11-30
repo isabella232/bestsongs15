@@ -517,14 +517,6 @@ var onPlayClick = function(e) {
     $audioPlayer.jPlayer('play');
     $play.hide();
     $pause.show();
-
-    // Increase time until next ad will display by amount of time player is paused
-    if (pausedTime !== null && nextAdTime !== null) {
-        var elapsedTime = moment().subtract(pausedTime);
-        nextAdTime = nextAdTime.add(elapsedTime);
-
-        pausedTime = null;
-    }
 }
 
 /*
