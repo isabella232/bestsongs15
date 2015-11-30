@@ -633,10 +633,6 @@ var writeSkipsRemaining = function() {
         $skipsRemaining.text(APP_CONFIG.SKIP_LIMIT - usedSkips.length + ' skips available')
         $skip.removeClass('disabled');
     }
-
-    if (renderAd === true) {
-        $skip.addClass('disabled');
-    }
 }
 
 /*
