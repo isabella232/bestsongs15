@@ -472,10 +472,6 @@ var setCurrentSongHeight = function(){
  * more than 4 times in 3 hours
  */
 var checkSongHistory = function(song) {
-    if (song['artist'] === 'Advertisement') {
-        return true;
-    }
-
     if (songHistory[song['id']]) {
         for (var i = 0; i < songHistory[song['id']].length; i++) {
             var now = moment.utc();
