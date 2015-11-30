@@ -64,10 +64,7 @@ var is_small_screen = false
 var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = true;
-var adCounter = 0;
-var renderAd = false;
 var reviewerDeepLink = false;
-var nextAdTime = null;
 var pausedTime = null;
 
 /*
@@ -330,9 +327,6 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    renderAd = false;
-    adCounter++;
-
     var nextSong = _.find(playlist, function(song) {
         return !(_.contains(playedSongs, song['id']));
     });
@@ -430,12 +424,8 @@ var playNextSong = function() {
     }
 
     currentSong = nextSong;
-
-    if (renderAd === false) {
-        markSongPlayed(currentSong);
-        updateTotalSongsPlayed();
-    }
-
+    markSongPlayed(currentSong);
+    updateTotalSongsPlayed();
     writeSkipsRemaining();
     preloadSongImages();
 }
