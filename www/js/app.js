@@ -352,11 +352,7 @@ var playNextSong = function() {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
     });
 
-    if (renderAd === true) {
-        var $html = $(JST.ad(context));
-    } else {
-        var $html = $(JST.song(context));
-    }
+    var $html = $(JST.song(context));
     $songs.append($html);
 
     $playerArtist.html(nextSong['artist']);
