@@ -44,9 +44,6 @@ var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
 var RESET_STATE = (window.location.search.indexOf('resetstate') >= 0);
 var ALL_HISTORY = (window.location.search.indexOf('allhistory') >= 0);
 
-// Constants
-var AD_FREQUENCY = 2;
-
 // Global state
 var firstShareLoad = true;
 var playedSongs = [];
