@@ -330,39 +330,23 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    // load ad data if ad frequency count is reached
-    // increment counter and load song data if not
-    if (adCounter === 2 || moment().isAfter(nextAdTime)) {
-        renderAd = true;
-        var nextsongURL = APP_CONFIG.S3_BASE_URL + '/assets/miller_ad.mp3';
-        var nextSong = {
-            'artist': 'NPR thanks our sponsors',
-            'title': 'Miller High Life'
+    renderAd = false;
+    adCounter++;
+
+    var nextSong = _.find(playlist, function(song) {
+        return !(_.contains(playedSongs, song['id']));
+    });
+
+    // check if we can play the song legally (4 times per 3 hours)
+    // if we don't have a song, get a new playlist
+    if (nextSong) {
+        var canPlaySong = checkSongHistory(nextSong);
+        if (!canPlaySong) {
+            return;
         }
-
-        nextAdTime = moment().add(1,'h');
-        adCounter++;
-
-        ANALYTICS.trackEvent('render-ad');
-    } else {
-        renderAd = false;
-        adCounter++;
-
-        var nextSong = _.find(playlist, function(song) {
-            return !(_.contains(playedSongs, song['id']));
-        });
-
-        // check if we can play the song legally (4 times per 3 hours)
-        // if we don't have a song, get a new playlist
-        if (nextSong) {
-            var canPlaySong = checkSongHistory(nextSong);
-            if (!canPlaySong) {
-                return;
-            }
-        }
-
-        var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
     }
+
+    var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
 
     var context = $.extend(APP_CONFIG, nextSong, {
         'showQuotes': nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title'].match('‘') ? false : true,
