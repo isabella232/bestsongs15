@@ -1035,21 +1035,31 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .song-tools {
-	padding-top: 10px;
+	padding: 10px 0;
 	margin-bottom: 0;
 	overflow: hidden;
-	position: absolute;
-	bottom: 0;
+	//position: absolute;
+	//bottom: 0;
 	left: @grid-gutter-width / 2;
 	.animation(fadeInOutBig 0.5s ease-in-out);
 
 
 	.song.small & {
-		bottom: 50%;
+        position: absolute;
+		bottom: 40%;
 		right: @grid-gutter-width / 2;
 		left: auto;
 		margin-bottom: -@font-size-base * 3 / 2;
 		.animation(fadeInOutSmall 0.5s ease-in-out);
+
+        .song-tools-label {
+            display: none;
+        }
+
+        li {
+            margin: .5rem 0;
+            display: block;
+        }
 
 		@media screen and (max-width: @screen-sm-max){
 			display: none;
@@ -1058,18 +1068,26 @@ h1,h2,h3,h4,h5,h6 {
 
 	li {
 		display: inline-block;
-		font-size: @font-size-base * 2;
-		line-height: @font-size-base * 2;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.5);
+		font-size: @font-size-base * .7;
+		line-height: @font-size-base * .7;
+        padding-right: @font-size-base * .5;
 
-		.icon-amazon {
+
+		/*.icon-amazon {
 			font-size: @font-size-base * 1.5;
-		}
+		}*/
 	}
 
 	a {
 		color: @music-red-light;
 		text-decoration: none;
 		outline: 0;
+
+        span {
+            padding-right: @font-size-base * 0.15;
+        }
 	}
 }
 
