@@ -1678,6 +1678,13 @@ h1,h2,h3,h4,h5,h6 {
 		padding: 7px 0;
 		color: @deep-blue;
 		font-size: @font-size-base;
+
+
+		&:hover {
+			.play-icon {
+				background-image: url('../assets/play-hover.svg');
+			}
+		}
 	}
 
     li a .tag-length {
@@ -1686,6 +1693,14 @@ h1,h2,h3,h4,h5,h6 {
     	font-size: @font-size-base * 0.7;
     	text-transform: uppercase;
     	margin-left: 8px;
+    }
+
+    li a .play-icon {
+    	background-image: url('../assets/play-default.svg');
+    	width: @font-size-base;
+    	height: @font-size-base;
+    	display: inline-block;
+    	background-size: contain;
     }
 }
 
