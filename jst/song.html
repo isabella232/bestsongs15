@@ -28,13 +28,13 @@
                     <li><a target="_blank" href="<%= spotify %>" class="spotify"><span class="icon-spotify-circled"></span> Spotify</a></li>
                     <% } %>
                 </ul>
+                <h4 class="why-we-loved-it">Why we loved it</h4>
 
                 <% for (var i = 0; i < reviews.length; i++) { %>
-
                     <div class="review-wrapper">
-                        <h4>Why we loved it</h4>
+
                         <p class="review"><%= reviews[i].review %></p>
-                        <p class="reviewer">Reviewed by <%= reviews[i].reviewer %></p>
+                        <p class="reviewer">&#8211; <%= reviews[i].reviewer %></p>
                         <% if (reviews[i].reviewer_affiliation !== null) { %><p class="affiliation"><%= reviews[i].reviewer_affiliation %></p><%}%>
                     </div>
                 <% } %>

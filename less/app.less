@@ -778,7 +778,7 @@ h1,h2,h3,h4,h5,h6 {
 		.transition(all 0.3s ease-in-out);
 
 		.small& {
-			padding: @line-height-computed / 2 0;
+			padding: 2rem 0 0 0;
 			min-height: 0;
 		}
 
@@ -895,6 +895,20 @@ h1,h2,h3,h4,h5,h6 {
 	margin-bottom: 0.5rem;
 }
 
+.why-we-loved-it {
+    font-family: 'Knockout 31 4r';
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin: 1rem 0 0 0;
+
+    .song.small & {
+        .transition(all 0.2s ease-in-out);
+        .scaleY(0);
+		opacity: 0;
+		max-height: 0;
+    }
+}
+
 .review-wrapper {
 	clear: both;
 	.transition(all 0.2s ease-in-out 0.2s);
@@ -902,20 +916,8 @@ h1,h2,h3,h4,h5,h6 {
 	.scaleY(1);
 	opacity: 1;
 	max-height: 100%;
-    border-top: 1px solid rgba(255,255,255,0.2);
-    padding-top: 1rem;
-
-    @media @screen-small-above {
-        border: none;
-        padding-top: 0;
-    }
-
-    h4 {
-        font-family: 'Knockout 31 4r';
-        font-size: 1rem;
-        text-transform: uppercase;
-        margin-top: 1rem;
-    }
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 1rem 0;
 
 	.song.small & {
 		.transition(all 0.2s ease-in-out);
@@ -927,7 +929,7 @@ h1,h2,h3,h4,h5,h6 {
 	.review {
 		/* background: #fff; */
         -webkit-font-smoothing: antialiased;
-		color: rgba(255,255,255,0.4);
+		color: rgba(255,255,255,0.7);
 		padding: @line-height-computed/2 0;
 		font-size: @font-size-base * .9;
 		line-height: 1.4;
@@ -940,6 +942,7 @@ h1,h2,h3,h4,h5,h6 {
 
     .reviewer {
         text-align: right;
+        font-size: @font-size-base * .8;
     }
 
 	.mug {
@@ -1046,10 +1049,11 @@ h1,h2,h3,h4,h5,h6 {
 
 	.song.small & {
         position: absolute;
-		bottom: 40%;
+		top: 0;
 		right: @grid-gutter-width / 2;
 		left: auto;
-		margin-bottom: -@font-size-base * 3 / 2;
+        padding: .1rem 0;
+		margin: 0;
 		.animation(fadeInOutSmall 0.5s ease-in-out);
 
         .song-tools-label {
@@ -1057,7 +1061,8 @@ h1,h2,h3,h4,h5,h6 {
         }
 
         li {
-            margin: .5rem 0;
+            font-size: @font-size-base * .8;
+            margin: 0 0 1rem 0;
             display: block;
         }
 
