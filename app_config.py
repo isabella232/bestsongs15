@@ -219,6 +219,7 @@ TAG_AUDIO_INTROS = {
 
 SKIP_LIMIT = 6
 
+FEATURED_LIMIT = 2
 
 """
 Utilities

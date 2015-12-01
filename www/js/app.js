@@ -327,7 +327,13 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    var nextSong = _.find(playlist, function(song) {
+    if (selectedTag === null && totalSongsPlayed < APP_CONFIG.FEATURED_LIMIT) {
+        var nextPlaylist = _.sortBy(playlist, 'featured').reverse();
+    } else {
+        var nextPlaylist = playlist;
+    }
+
+    var nextSong = _.find(nextPlaylist, function(song) {
         return !(_.contains(playedSongs, song['id']));
     });
 
