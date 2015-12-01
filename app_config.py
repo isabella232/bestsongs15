@@ -93,7 +93,7 @@ COPY_PATH = 'data/copy.xlsx'
 """
 SONG DATA
 """
-SONGS_GOOGLE_DOC_KEY = '1yEre5xDvDzCk40PX9dfUPxnULfZBjIUsp8p-9tqFe0c'
+# See configuration targets section for keys to use locally and in prod
 SONGS_DATA_PATH = 'data/songs.xlsx'
 
 """
@@ -251,6 +251,7 @@ def configure_targets(deployment_target):
     global DEPLOYMENT_TARGET
     global DISQUS_SHORTNAME
     global ASSETS_MAX_AGE
+    global SONGS_GOOGLE_DOC_KEY
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
@@ -262,6 +263,7 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'npr-news'
         DEBUG = False
         ASSETS_MAX_AGE = 86400
+        SONGS_GOOGLE_DOC_KEY = '1yEre5xDvDzCk40PX9dfUPxnULfZBjIUsp8p-9tqFe0c'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
@@ -272,6 +274,7 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         ASSETS_MAX_AGE = 20
+        SONGS_GOOGLE_DOC_KEY = '1yEre5xDvDzCk40PX9dfUPxnULfZBjIUsp8p-9tqFe0c'
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:8000'
@@ -282,6 +285,7 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         ASSETS_MAX_AGE = 20
+        SONGS_GOOGLE_DOC_KEY = '1ncAI-wvcPiXx_X1g8CM-0wGSYZ3c_0Cu4BQfjPD_gWM'
 
     DEPLOYMENT_TARGET = deployment_target
 
