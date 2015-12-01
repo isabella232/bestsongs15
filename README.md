@@ -293,6 +293,8 @@ python -m SimpleHTTPServer
 Deploy to S3
 ------------
 
+Deploying to staging or production will use the real data, not the local development test data.
+
 ```
 fab staging master deploy
 ```
