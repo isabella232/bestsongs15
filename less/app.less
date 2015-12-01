@@ -930,9 +930,9 @@ h1,h2,h3,h4,h5,h6 {
 		/* background: #fff; */
         -webkit-font-smoothing: antialiased;
 		color: rgba(255,255,255,0.7);
-		padding: @line-height-computed/2 0;
-		font-size: @font-size-base * .9;
-		line-height: 1.4;
+		padding: 0;
+		font-size: @font-size-base * 1.1;
+		line-height: 1.5;
 		margin: 0;
 
 		@media screen and (max-width: @screen-xs-max){
@@ -942,7 +942,7 @@ h1,h2,h3,h4,h5,h6 {
 
     .reviewer {
         text-align: right;
-        font-size: @font-size-base * .8;
+        font-size: @font-size-base * .9;
     }
 
 	.mug {
@@ -1125,6 +1125,7 @@ h1,h2,h3,h4,h5,h6 {
 
 	li {
 		display: inline;
+        margin-right: @font-size-base * 0.5;
 
 /* 		&:after {
     content: ", ";
