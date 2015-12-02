@@ -130,6 +130,49 @@ h1,h2,h3,h4,h5,h6 {
 // Landing page
 // --------------------------------------------------
 
+
+.touch {
+    #bg-vid {
+       display: none;
+    }
+    #video-bg {
+        background: transparent url('../assets/recovery.gif') center center no-repeat;
+        .background-size(cover);
+    }
+}
+
+#video-bg {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    overflow: hidden;
+}
+
+#video-bg > video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    visibility:hidden;
+    .no-touch & { visibility:visible; }
+}
+/* 1. No object-fit support: */
+@media (min-aspect-ratio: 16/9) {
+    #video-bg > video { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+    #video-bg > video { width: 300%; left: -100%; }
+}
+/* 2. If supporting object-fit, overriding (1): */
+@supports (object-fit: cover) {
+    #video-bg > video {
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+    }
+}
+
 .landing {
 	text-align: right;
 	clear: both;
@@ -153,13 +196,14 @@ h1,h2,h3,h4,h5,h6 {
 
 	.landing-wrapper {
 		padding: 20px;
-		width: 100% / 3;
+		width: 100%;
 		left: 0;
-		background-color: white;
 		display: table;
+        position: relative;
+        z-index: 1;
 
 		@media screen and (min-aspect-ratio: 2/1) {
-			width: 40%;
+			//width: 40%;
 		}
 
 		@media screen and (max-width: @screen-xs-max){
@@ -198,7 +242,6 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.landing-content {
-		background: @white;
 		display: table-cell;
 		vertical-align: middle;
 	}
@@ -333,6 +376,7 @@ h1,h2,h3,h4,h5,h6 {
 	position: absolute;
 	height: 100%;
 	bottom: 0;
+    display: none;
 }
 
 .poster,
@@ -838,7 +882,7 @@ h1,h2,h3,h4,h5,h6 {
 				}
 
 				.tag-header {
-					.clearfix;
+					//.clearfix;
 				}
 			}
 
@@ -917,7 +961,11 @@ h1,h2,h3,h4,h5,h6 {
 	opacity: 1;
 	max-height: 100%;
     border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding: 1rem 0;
+    padding-bottom: 1rem;
+
+    @media @screen-small-above {
+        padding: 1rem 0;
+    }
 
 	.song.small & {
 		.transition(all 0.2s ease-in-out);
@@ -1101,7 +1149,8 @@ h1,h2,h3,h4,h5,h6 {
 	text-transform: uppercase;
 	letter-spacing: 0.1rem;
 	color: rgba(255,255,255,0.5);
-	margin: 0 0 .5rem 0;
+	margin: .31rem .5rem 0 0;
+    float: left;
 }
 
 .song-tags {
