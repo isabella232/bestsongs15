@@ -1594,7 +1594,6 @@ h1,h2,h3,h4,h5,h6 {
 	p {
 		color: #999;
 		font-size: @font-size-small;
-		margin-bottom: 2rem;
 
 		.warning {
 			display: none;
@@ -1670,14 +1669,25 @@ h1,h2,h3,h4,h5,h6 {
 	padding: 0;
 	li {
 		display: block;
-		margin-bottom: 3px;
+		margin-bottom: 1.4rem;
+
+        p {
+            margin: 0;
+        }
+
+        .list-artists {
+            font-family: "Knockout 31 4r";
+            font-size: @font-size-base * 0.9;
+            color: #B4BDC4;
+            line-height: 1.4;
+        }
 	}
 
 	li a {
 		display: inline-block;
 		padding: 7px 0;
 		color: @deep-blue;
-		font-size: @font-size-base;
+		font-size: @font-size-base * 1.2;
 
 
 		&:hover {
@@ -1697,8 +1707,8 @@ h1,h2,h3,h4,h5,h6 {
 
     li a .play-icon {
     	background-image: url('../assets/play-default.svg');
-    	width: @font-size-base;
-    	height: @font-size-base;
+    	width: @font-size-base * 1.2;
+    	height: @font-size-base * 1.2;
     	display: inline-block;
     	background-size: contain;
     	position: relative;
