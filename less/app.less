@@ -1532,6 +1532,10 @@ h1,h2,h3,h4,h5,h6 {
     p.play-everything {
     	margin-bottom: 0;
     	display: inline-block;
+
+        i {
+            margin-right: .5rem;
+        }
     }
     a.shuffle-songs {
     	background: transparent;
@@ -1691,6 +1695,7 @@ h1,h2,h3,h4,h5,h6 {
 
 
 		&:hover {
+            color: #fff;
 			.play-icon {
 				background-image: url('../assets/play-hover.svg');
 			}
@@ -1711,6 +1716,7 @@ h1,h2,h3,h4,h5,h6 {
     	height: @font-size-base * 1.2;
     	display: inline-block;
     	background-size: contain;
+        background-repeat: no-repeat;
     	position: relative;
     	top: 2px;
     }
@@ -1718,7 +1724,6 @@ h1,h2,h3,h4,h5,h6 {
 
 .no-touch .genre .tags li a.disabled:hover {
     text-decoration: none;
-    opacity: 0.5;
 }
 
 .current-song {
