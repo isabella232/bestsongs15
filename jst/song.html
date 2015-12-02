@@ -34,8 +34,10 @@
                     <div class="review-wrapper">
 
                         <p class="review"><%= reviews[i].review %></p>
-                        <p class="reviewer">&#8211; <%= reviews[i].reviewer %></p>
-                        <% if (reviews[i].reviewer_affiliation !== null) { %><p class="affiliation"><%= reviews[i].reviewer_affiliation %></p><%}%>
+                        <p class="reviewer">
+                            &#8211; <%= reviews[i].reviewer %><% if (reviews[i].reviewer_affiliation !== null) {%>, <%= reviews[i].reviewer_affiliation %><%}%>
+                        </p>
+
                     </div>
                 <% } %>
 
