@@ -327,6 +327,7 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
+    console.log('hello');
     if (selectedTag === null && totalSongsPlayed < APP_CONFIG.FEATURED_LIMIT) {
         var nextPlaylist = _.sortBy(playlist, 'featured').reverse();
     } else {
@@ -416,7 +417,6 @@ var playNextSong = function() {
                                 delay: 300,
                                 complete: function() {
                                     $(document).on('scroll', onDocumentScroll);
-
                                     if (playedSongs.length > 1) {
                                         $historyButton.show();
                                         $historyButton.removeClass('offscreen');
@@ -926,7 +926,10 @@ var hideWelcome  = function() {
             });
             $(this).find('.poster').addClass('shrink');
             $(this).find('.skip-intro').velocity('fadeOut');
-
+            if (playedSongs.length > 1) {
+                $historyButton.show();
+                $historyButton.removeClass('offscreen');
+            }
         },
         complete: function() {
             $landing.velocity('fadeOut', {
