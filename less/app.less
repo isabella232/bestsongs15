@@ -147,6 +147,14 @@ h1,h2,h3,h4,h5,h6 {
     position: fixed;
     top: 0; right: 0; bottom: 0; left: 0;
     overflow: hidden;
+
+    .vid-mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .4);
+        z-index: 1;
+    }
 }
 
 #video-bg > video {
@@ -178,17 +186,14 @@ h1,h2,h3,h4,h5,h6 {
 .landing {
 	//clear: both;
 	display: none;
-	position: fixed;
+	position: absolute;
     width: 100%;
 	height: 100%;
 	top: 0;
 	left: 0;
 	z-index: 600;
-	overflow: hidden;
+	//overflow: hidden;
 
-	@media screen and (max-width: @screen-xs-max){
-		text-align: left;
-	}
 
 	.landing-firstload-deck,
 	.landing-return-deck {
@@ -196,11 +201,11 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	.landing-wrapper {
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 100%;
         z-index: 1;
-        background-color: rgba(0, 0, 0, .4);
+        //background-color: rgba(0, 0, 0, .4);
         //background-image: url('../assets/2015-poster2.svg');
 		background-size: 100%;
         background-position: center center;
