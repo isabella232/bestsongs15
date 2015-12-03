@@ -30,7 +30,7 @@
 
 // music homepage
 @music-hp-light: #e7e4dd;
-@music-hp-dark: #19262f;
+@music-hp-dark: #3A3A65; //#19262f;
 @music-hp-link-color: #568fcb;
 @music-hp-link-color2: #4a90e2;
 @music-hp-c-t-asecondary: #8a8a8a;
@@ -117,6 +117,11 @@ html {
 
 body {
 	font-family: 'Gotham SSm',Helvetica,Arial,sans-serif;
+    background-color: #142129;
+    background-image: url('../assets/recovery-horizontal.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -591,9 +596,9 @@ h1,h2,h3,h4,h5,h6 {
 	right: 0;
 	height: 4rem;
 	padding: 0 @grid-gutter-width;
-	background: @music-hp-dark;
+	background: #131323;
 	color: @music-medium;
-	border-bottom: 1px solid #253645;
+	border-bottom: 1px solid #3A3A65;
 	z-index: @z-fixed-header;
 	-webkit-backface-visibility: hidden; // prevent flickering of bar on scroll in Chrome/Safari
 	-webkit-transform: translate3d(0,0,0);
@@ -757,15 +762,16 @@ h1,h2,h3,h4,h5,h6 {
 .songs {
 	display: none;
 	color: @white;
-	background-color: #142129;
-	background: repeating-radial-gradient(circle at 0 0, #121b21, #19232b 7rem);
+	//background-color: #142129;
+	//background: repeating-radial-gradient(circle at 0 0, #121b21, #19232b 7rem);
+
 	padding-top: 4rem;
 	padding-bottom: 9rem;
 }
 
 .song {
-	background: darken(@music-hp-dark, 5%);
 	border-top: 2px solid @music-hp-dark;
+    background-color: rgba(0, 0, 0, .6);
 	.transition(0.3s all ease-in-out);
 	-webkit-backface-visibility: hidden; // prevent flickering in Safari
 
@@ -788,8 +794,9 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	&:last-child {
-		background: transparent;
-		border-color: transparent;
+		//background: transparent;
+		//border-color: transparent;
+        background-color: rgba(0, 0, 0, .5);
 	}
 
 	&:not(:last-child) {
@@ -1289,7 +1296,7 @@ h1,h2,h3,h4,h5,h6 {
 .player {
 	position: relative;
 	height: 5rem;
-	background: #333;
+	background: #131323;
 	line-height: 5rem;
 
 	.controls {
