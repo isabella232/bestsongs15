@@ -7,8 +7,8 @@
 //color palette
 @primary-control: #6d8ac4;
 @deep-blue: #7598c9;
-@blue-dark: #1E2E3A;
-@blue-darker: #141D24;
+@blue-dark: #24243A; //#1E2E3A;
+@blue-darker: #1F1F31; //#141D24;
 
 // music palette
 @music-dark: #444d58;
@@ -118,7 +118,7 @@ html {
 body {
 	font-family: 'Gotham SSm',Helvetica,Arial,sans-serif;
     background-color: #142129;
-    background-image: url('../assets/recovery-horizontal.gif');
+    background-image: url('../assets/recovery-vertical1.gif');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -596,7 +596,7 @@ h1,h2,h3,h4,h5,h6 {
 	right: 0;
 	height: 4rem;
 	padding: 0 @grid-gutter-width;
-	background: #131323;
+	background: #2A2A39;
 	color: @music-medium;
 	border-bottom: 1px solid #3A3A65;
 	z-index: @z-fixed-header;
@@ -705,8 +705,8 @@ h1,h2,h3,h4,h5,h6 {
 .show-history:focus,
 .show-history:visited {
 	.transition(all 0.2s ease-in-out);
-	color: @music-hp-link-color;
-	border: 1px solid @music-hp-link-color;
+	color: #bbb; //@music-hp-link-color;
+	border: 1px solid #bbb; //@music-hp-link-color;
 	// font-family: 'Knockout 31 4r';
 	text-transform: uppercase;
 	letter-spacing: 0.1rem;
@@ -714,7 +714,7 @@ h1,h2,h3,h4,h5,h6 {
 	position: fixed;
 	top: 1rem;
 	right: @grid-gutter-width;
-	background: fadeout(@music-hp-dark, 10%);
+	background: rgba(255, 255, 255, .1);
 	padding: 0.5rem;
 	border-radius: 4px;
 	text-decoration: none;
@@ -771,7 +771,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .song {
 	border-top: 2px solid @music-hp-dark;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(42,42,57,.6);
 	.transition(0.3s all ease-in-out);
 	-webkit-backface-visibility: hidden; // prevent flickering in Safari
 
@@ -796,7 +796,7 @@ h1,h2,h3,h4,h5,h6 {
 	&:last-child {
 		//background: transparent;
 		//border-color: transparent;
-        background-color: rgba(0, 0, 0, .5);
+        background-color: rgba(42,42,57,.7);
 	}
 
 	&:not(:last-child) {
@@ -1296,7 +1296,7 @@ h1,h2,h3,h4,h5,h6 {
 .player {
 	position: relative;
 	height: 5rem;
-	background: #131323;
+	background: #2A2A39;
 	line-height: 5rem;
 
 	.controls {
@@ -1453,10 +1453,12 @@ h1,h2,h3,h4,h5,h6 {
 
 .filter-title,
 .filter-title:visited {
-	background: @music-hp-light;
+	background: #eee; //@music-hp-light;
 	height: 4rem;
 	padding-top: 0.6rem;
-	border-bottom: 1px solid #ddd;
+    //box-shadow: 1px -3px 22px #111;
+    //border-top: 2px solid @music-red-light;
+	//border-bottom: 1px solid #3A3A65;
 	cursor: pointer;
 	padding-left: 6rem;
 
@@ -1517,7 +1519,7 @@ h1,h2,h3,h4,h5,h6 {
 		width: 5.1rem;
 		height: 4rem;
 		line-height: 4rem;
-		color: #666;
+		color: @music-red-light; //#666;
 		text-align: center;
 
 		&:after {
