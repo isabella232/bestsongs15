@@ -1207,7 +1207,7 @@ var onWindowResize = function(e) {
     fixedHeaderHeight = parseInt($html.css('font-size')) * 4;
 
     is_small_screen = Modernizr.mq('screen and (max-width: 767px)');
-    $landing.find('.landing-wrapper').css('height', $(window).height());
+    //$landing.find('.landing-wrapper').css('height', $(window).height());
     setCurrentSongHeight();
 }
 
