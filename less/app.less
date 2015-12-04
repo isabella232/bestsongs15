@@ -1298,6 +1298,12 @@ h1,h2,h3,h4,h5,h6 {
 
 	&.expand {
 		height: 100%;
+        .menu {color: @music-red-light;}
+        .no-touch & {
+    		&:hover {
+    			.menu {color: @music-red-light;}
+    		}
+    	}
 	}
 }
 
@@ -1479,6 +1485,10 @@ h1,h2,h3,h4,h5,h6 {
 		&:hover {
 			background: @white;
 
+            .menu {
+                color:@music-red-light;
+            }
+
 			&:after {
 			// 	background: @primary-control;
 				color: @music-red-light;
@@ -1518,24 +1528,30 @@ h1,h2,h3,h4,h5,h6 {
     }
 
 
-	.carot {
+	.menu {
 		font-family: FontAwesome;
 		position: absolute;
 		left: 0;
 		top: 0;
-		font-size: 2.5rem;
+		font-size: 1.5rem;
 		width: 5.1rem;
 		height: 4rem;
 		line-height: 4rem;
-		color: @music-red-light; //#666;
+		color: #666; //#666;
 		text-align: center;
 
+        .expand & {
+            color: #000;
+        }
+
 		&:after {
-			content: '\f106';
+			content: '\f0c9';
 			.expand & {
-				content: '\f107';
+				content: '\f00d';
 			}
 		}
+
+
 	}
 
 	.song-count,
