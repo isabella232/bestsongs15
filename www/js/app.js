@@ -61,7 +61,6 @@ var songHistory = {};
 var songHeight = null;
 var fixedHeaderHeight = null;
 var is_small_screen = false
-var inPreroll = false;
 var firstReviewerSong = false;
 var playExplicit = true;
 var reviewerDeepLink = false;
@@ -262,53 +261,6 @@ var onTimeUpdate = function(e) {
 /*
  * Start playing the preroll audio.
  */
-var playIntroAudio = function() {
-    var audioFile = null;
-    var introText = selectedTag;
-
-    // if on welcome screen, play the intro audio
-    if (onWelcome && !selectedTag) {
-        audioFile = APP_CONFIG.WELCOME_AUDIO;
-    }
-
-    if (onWelcome && selectedTag !== null) {
-        audioFile = APP_CONFIG.TAG_AUDIO_INTROS[selectedTag];
-    }
-
-    // if we have a selected tag, find its audio
-    if (selectedTag && !onWelcome) {
-        audioFile = APP_CONFIG.TAG_AUDIO_INTROS[selectedTag];
-    }
-
-    // if there is no audio (i.e. genres), just play the next song
-    if (!audioFile) {
-        playNextSong();
-        return;
-    }
-
-    inPreroll = true;
-
-    if (!onWelcome) {
-        $('.stack .poster').velocity('fadeIn');
-        $('.stack .poster').find('.loading').text(introText).css('opacity',1);
-        $skipsRemaining.hide();
-    }
-
-    $audioPlayer.jPlayer('setMedia', {
-        mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
-    });
-
-    $playerTitle.addClass('no-quotes');
-    $playerArtist.text('');
-    $playerTitle.addClass('no-quotes').text('');
-
-    if (!NO_AUDIO){
-        $audioPlayer.jPlayer('play');
-    } else {
-        playNextSong();
-    }
-}
-
 
 /*
  * Skip the welcome audio.
@@ -327,7 +279,6 @@ var onSkipIntroClick = function(e) {
  * Play the next song in the playlist.
  */
 var playNextSong = function() {
-    console.log('hello');
     if (selectedTag === null && totalSongsPlayed < APP_CONFIG.FEATURED_LIMIT) {
         var nextPlaylist = _.sortBy(playlist, 'featured').reverse();
     } else {
@@ -368,7 +319,6 @@ var playNextSong = function() {
     $title.html(nextSong['artist'] + ' \u2014 \u2018' + nextSong['title'] + '\u2019 | ' + COPY.content['project_name']);
     $skipsRemaining.show();
 
-    inPreroll = false;
     if (!NO_AUDIO) {
         $audioPlayer.jPlayer('setMedia', {
             mp3: nextsongURL
@@ -576,12 +526,9 @@ var onSkipClick = function(e) {
  * Skip to the next song
  */
 var skipSong = function() {
-    if (inPreroll || usedSkips.length < APP_CONFIG.SKIP_LIMIT) {
-        if (!inPreroll) {
-            usedSkips.push(moment.utc());
-            ANALYTICS.trackEvent('song-skip', $playerArtist.text() + ' - ' + $playerTitle.text());
-        }
-
+    if (usedSkips.length < APP_CONFIG.SKIP_LIMIT) {
+        usedSkips.push(moment.utc());
+        ANALYTICS.trackEvent('song-skip', $playerArtist.text() + ' - ' + $playerTitle.text());
         playNextSong();
         simpleStorage.set('songs15UsedSkips', usedSkips);
         writeSkipsRemaining();
@@ -911,36 +858,11 @@ var hideWelcome  = function() {
 
     $songs.find('.song').last().velocity("scroll", { duration: 750, offset: -fixedHeaderHeight });
 
-    $landing.velocity({
-        bottom: '5rem',
-        height: '4rem',
-    }, {
-        duration: 1000,
-        timing: 'ease-in-out',
-        begin: function() {
-            $('.landing-wrapper').hide().css('height', '');
-            $(this).find('.tip-three').removeClass('show');
-            $('.tips').fadeOut();
-            $(this).find('.done').velocity('fadeIn', {
-                delay: 500
-            });
-            $(this).find('.poster').addClass('shrink');
-            $(this).find('.skip-intro').velocity('fadeOut');
-            if (playedSongs.length > 1) {
-                $historyButton.show();
-                $historyButton.removeClass('offscreen');
-            }
-        },
-        complete: function() {
-            $landing.velocity('fadeOut', {
-                delay: 4000,
-                duration: 1000,
-                complete: function() {
-                    $landing.find('.poster').removeClass('shrink').attr('style','');
-                }
-            });
-        }
-    });
+    $landing.velocity('fadeOut');
+
+    setTimeout(function() {
+        $('.instructions').velocity('fadeOut');
+    }, 3000);
 
     onWelcome = false;
 
@@ -986,7 +908,7 @@ var onGoButtonClick = function(e) {
         buildPlaylist();
         updateTagDisplay();
         swapTapeDeck();
-        playIntroAudio();
+        playNextSong();
         return;
     }
 
@@ -996,8 +918,7 @@ var onGoButtonClick = function(e) {
     playedSongs = [];
     simpleStorage.set('songs15PlayedSongs', playedSongs);
     switchTag(selectedTag, true);
-    playIntroAudio();
-
+    playNextSong();
     ANALYTICS.trackEvent('shuffle');
 }
 
@@ -1065,7 +986,6 @@ var onContinueButtonClick = function(e) {
 
     buildPlaylist();
     updateTagDisplay();
-    $landing.velocity('fadeOut');
     playNextSong();
 
     ANALYTICS.trackEvent('continue-playback-click');
