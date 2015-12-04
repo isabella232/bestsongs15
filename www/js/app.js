@@ -21,6 +21,7 @@ var $genreFilters = null;
 var $reviewerFilters = null;
 var $filtersPanel = null;
 var $fixedHeader = null;
+var $landingCard = null;
 var $landingReturnDeck = null;
 var $landingFirstDeck = null;
 var $shuffleSongs = null;
@@ -95,6 +96,7 @@ var onDocumentLoad = function(e) {
     $reviewerFilters = $('.reviewer li a');
     $filtersPanel = $('.playlist-filters');
     $fixedHeader = $('.fixed-header');
+    $landingCard = $('.landing-card');
     $landingReturnDeck = $('.landing-return-deck');
     $landingFirstDeck = $('.landing-firstload-deck');
     $shuffleSongs = $('.shuffle-songs');
@@ -859,9 +861,30 @@ var hideWelcome  = function() {
     $fixedHeader.show();
     setCurrentSongHeight();
 
-    $songs.find('.song').last().velocity("scroll", { duration: 750, offset: -fixedHeaderHeight });
-
-    $landing.velocity('fadeOut');
+    $landingCard.velocity('fadeOut', {
+        duration: 800,
+        begin: function() {
+            $('.vid-mask').velocity('fadeOut', {
+                duration: 800
+            });
+        },
+        complete: function() {
+            $landing.velocity('fadeOut', {
+                duration: 500,
+                complete: function() {
+                    $songs.find('.song').last().velocity("scroll", { duration: 750,
+                        offset: -fixedHeaderHeight,
+                        complete: function() {
+                            $instructions.velocity('fadeOut', {
+                                duration: 1000,
+                                delay: 5000
+                            })
+                        }
+                    });
+                }
+            })
+        }
+    })
 
     setTimeout(function() {
         $('.instructions').velocity('fadeOut');
