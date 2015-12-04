@@ -30,6 +30,7 @@ var $pause = null;
 var $filtersButton = null;
 var $currentDj = null;
 var $fixedControls = null;
+var $instructions = null;
 var $historyButton = null;
 var $skipsRemaining = null;
 var $languageToggle = null;
@@ -103,6 +104,7 @@ var onDocumentLoad = function(e) {
     $filtersButton = $('.js-toggle-filters');
     $currentDj = $('.current-dj');
     $fixedControls = $('.fixed-controls');
+    $instructions = $('.instructions');
     $historyButton = $('.js-show-history');
     $skipsRemaining = $('.skips-remaining');
     $languageToggle = $('.language-toggle');
@@ -125,6 +127,7 @@ var onDocumentLoad = function(e) {
     $play.on('click', onPlayClick);
     $pause.on('click', onPauseClick);
     $filtersButton.on('click', onFiltersButtonClick);
+    $instructions.on('click', onFiltersButtonClick);
     $(window).on('resize', onWindowResize);
     $(document).on('scroll', onDocumentScroll);
     $shuffleSongs.on('click', onShuffleSongsClick);
