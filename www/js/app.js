@@ -878,7 +878,7 @@ var hideWelcome  = function() {
                         complete: function() {
                             $instructions.velocity('fadeOut', {
                                 duration: 1000,
-                                delay: 3000
+                                delay: 7000
                             })
                         }
                     });
