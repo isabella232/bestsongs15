@@ -376,6 +376,9 @@ h1,h2,h3,h4,h5,h6 {
 
 .stack {
 	display: block;
+    background-image: url('../assets/recovery-vertical1.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
 
 	.poster {
 		position: fixed;
@@ -763,10 +766,8 @@ h1,h2,h3,h4,h5,h6 {
 	color: @white;
 	//background-color: #142129;
 	//background: repeating-radial-gradient(circle at 0 0, #121b21, #19232b 7rem);
+    background-color: rgba(42,42,57,.7);
 
-    background-image: url('../assets/recovery-vertical1.gif');
-    background-size: cover;
-    background-repeat: no-repeat;
 
 	padding-top: 4rem;
 	padding-bottom: 9rem;
@@ -774,8 +775,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .song {
 	border-top: 2px solid @music-hp-dark;
-    background-color: rgba(42,42,57,.7);
 	.transition(0.3s all ease-in-out);
+    background-color: rgba(42,42,57,.5);
 	-webkit-backface-visibility: hidden; // prevent flickering in Safari
 
 	> .container-fluid {
@@ -797,9 +798,8 @@ h1,h2,h3,h4,h5,h6 {
 	}
 
 	&:last-child {
-		//background: transparent;
+		background: transparent;
 		//border-color: transparent;
-        background-color: rgba(42,42,57,.5);
 	}
 
 	&:not(:last-child) {
