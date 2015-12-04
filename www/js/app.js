@@ -489,6 +489,7 @@ var onFiltersButtonClick = function(e) {
     e.preventDefault();
     toggleFilterPanel();
     $filtersPanel.scrollTop(0);
+    $instructions.css('opacity', 0);
 }
 
 var onFilterTipClick = function(e) {
@@ -877,7 +878,7 @@ var hideWelcome  = function() {
                         complete: function() {
                             $instructions.velocity('fadeOut', {
                                 duration: 1000,
-                                delay: 5000
+                                delay: 3000
                             })
                         }
                     });
