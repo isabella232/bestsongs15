@@ -862,7 +862,7 @@ var hideWelcome  = function() {
 
     setTimeout(function() {
         $('.instructions').velocity('fadeOut');
-    }, 3000);
+    }, 1000000);
 
     onWelcome = false;
 
