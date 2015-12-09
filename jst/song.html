@@ -35,7 +35,11 @@
 
                         <p class="review"><%= reviews[i].review %></p>
                         <p class="reviewer">
-                            &#8211; <%= reviews[i].reviewer %><% if (reviews[i].reviewer_affiliation !== null) {%>, <%= reviews[i].reviewer_affiliation %><%}%>
+                            &#8211; <%= reviews[i].reviewer %><% if (reviews[i].reviewer_affiliation !== null) {%>, 
+                            <% if (reviews[i].reviewer_link !== null) { %><a href="<%= reviews[i].reviewer_link %>" target="_blank"><% } %>
+                            <%= reviews[i].reviewer_affiliation %>
+                            <% if (reviews[i].reviewer_link !== null) { %></a><% } %>
+                            <%}%>
                         </p>
 
                     </div>
