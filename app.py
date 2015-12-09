@@ -12,6 +12,7 @@ import json
 import oauth
 import static
 
+from collections import OrderedDict
 from flask import Flask, make_response, render_template
 from math import ceil
 from render_utils import make_context, smarty_filter, urlencode_filter
@@ -60,9 +61,22 @@ def seamus():
 
         songs = sorted(songs_data, key=lambda k: (k['artist'].lower()[4:] if k['artist'].lower().startswith('the ') else k['artist'].lower()))
 
-    context['songs'] = songs
+    tags = sorted(context['COPY']['tags']._serialize().values(), key=lambda k: k['displayname'])
+    context['songs'] = _group_by_genre(songs, tags)
 
     return render_template('seamus-preview.html', **context)
+
+
+def _group_by_genre(songs, tags):
+    grouped = OrderedDict()
+    for tag in tags:
+        grouped[tag['displayname']] = []
+    for song in songs:
+        tag = song['genre_tags'][0]
+        grouped[tag].append(song)
+
+    return grouped
+
 
 app.register_blueprint(static.static)
 app.register_blueprint(oauth.oauth)

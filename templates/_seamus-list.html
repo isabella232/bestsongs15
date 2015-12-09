@@ -10,15 +10,19 @@
 <p>Jump directly to a genre:</p>
 
 <p>
-{% for genre, songs in songs|groupby('genre1') %}
+{% for genre, genre_songs in songs.items() %}
+  {% if genre_songs|length %}
 	<a href="#genre-{{ genre|lower|replace(' ', '')|replace('/','') }}"><strong>{{ genre }}</strong></a><br>
+  {% endif %}
 {% endfor %}
 </p>
 
-{% for genre, songs in songs|groupby('genre1') %}
+{% for genre, genre_songs in songs.items() %}
+  {% if genre_songs|length %}
 	<a name="genre-{{ genre|lower|replace(' ', '')|replace('/','') }}"></a>
-	{% for song in songs %}
+	{% for song in genre_songs %}
 		<p><strong>{{ song.artist }}, "{{ song.title }}"</strong></p>
-		<p>{{ song.review }}</p>
+		<p>{{ song.reviews[0].review }}</p>
 	{% endfor %}
+  {% endif %}
 {% endfor %}
