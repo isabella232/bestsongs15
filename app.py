@@ -13,6 +13,7 @@ import oauth
 import static
 
 from flask import Flask, make_response, render_template
+from math import ceil
 from render_utils import make_context, smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
@@ -36,6 +37,10 @@ def index():
     with open('data/songs.json') as f:
         context['song_data'] = f.read()
         context['total_songs'] = len(json.loads(context['song_data']))
+
+    context['tags'] = context['COPY']['tags']._serialize().values()
+
+    context['TAG_SPLIT_INDEX'] = int(ceil(len(context['tags']) / 2.0))
 
     return make_response(render_template('index.html', **context))
 
