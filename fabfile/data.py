@@ -42,6 +42,10 @@ def update_songs(verify='true'):
 
 @task
 def process_songs(data, verify):
+
+    tagdata = copytext.Copy(app_config.COPY_PATH)['tags']._serialize()
+    genre_tags = [tag['displayname'] for tag in tagdata.values()]
+
     output = []
     unique_audio = []
     unique_song_art = []
@@ -78,9 +82,11 @@ def process_songs(data, verify):
 
         for tag in song['genre_tags'].split(','):
             tag = tag.strip()
-            if tag == 'Metal':
-                tag = '\m/ >_< \m/'
-            tags.append(tag)
+            defined_tag = tagdata.get(tag)
+            if defined_tag:
+                tags.append(defined_tag['displayname'])
+            elif not defined_tag and verify:
+                print "--> Tag %s is not a valid tag" % (tag)
 
         song['genre_tags'] = tags
 
@@ -106,11 +112,6 @@ def process_songs(data, verify):
                     print '--> %s The song art URL is invalid: %s' % (song_art_request, song_art_link)
             except:
                 print '--> request.head failed'
-
-            # Verify tags
-            for song_genre in song['genre_tags']:
-                if song_genre not in app_config.GENRE_TAGS:
-                    print "--> Genre %s is not a valid genre" % (song_genre)
 
             if song['media_url'] in unique_audio:
                 print '--> Duplicate audio url: %s' % song['media_url']

@@ -148,77 +148,10 @@ authomatic_config = {
 authomatic = Authomatic(authomatic_config, os.environ.get('AUTHOMATIC_SALT'))
 
 """
-SONGZ
+SONG CONFIGURATION
 """
-GENRE_TAGS = [
-    'Classical',
-    'Country/Americana',
-    'Electronic',
-    'Hip-Hop',
-    'Jazz',
-    'Latin',
-    'Pop',
-    'R&B',
-    'Rock',
-    '\m/ >_< \m/',
-    'World'
-]
-
-REVIEWER_TAGS = [
-    'Bob Boilen',
-    'Ann Powers',
-    'Ali Shaheed Muhammad',
-
-    'Jason King',
-    'David Dye',
-    'Rita Houston',
-
-    'Anastasia Tsioulcas',
-    'Felix Contreras',
-    'Kevin Cole'
-]
-
-REVIEWER_IMAGES = {
-    # With playlists
-    'Bob Boilen': 'bob.jpg',
-    'Ann Powers': 'ann.jpg',
-    'Ali Shaheed Muhammad': 'ali.jpg',
-    'Jason King': 'jason-king.jpg',
-    'David Dye': 'david-dye.jpg',
-    'Rita Houston': 'rita-houst.jpg',
-    'Anastasia Tsioulcas': 'tsioulcas.jpg',
-    'Felix Contreras': 'contreras.jpg',
-    'Kevin Cole': 'kevin-cole.jpg'
-}
-
-REVIEWER_BIOS = {
-    'Bob Boilen': 'Co-host of All Songs Considered ',
-    'Ann Powers': 'Pop Critic for NPR Music',
-    'Ali Shaheed Muhammad': 'Host of NPR Music&rsquo;s Microphone Check',
-    'Jason King': 'Host of NPR R&B',
-    'David Dye': 'Host of NPR&rsquo;s World Cafe',
-    'Rita Houston': 'Program Director at WFUV in New York City',
-    'Anastasia Tsioulcas': 'Co-host of NPR Classical',
-    'Felix Contreras': 'Co-host of NPR Music&rsquo;s Alt.Latino',
-    'Kevin Cole': 'Program Director at KEXP in Seattle'
-}
-
-WELCOME_AUDIO = '/npr/specialmusic/2015/06/20150626_specialmusic_bobspecific.mp3'
-
-TAG_AUDIO_INTROS = {
-    'Bob Boilen': '/npr/specialmusic/2015/06/20150626_specialmusic_bobboilen.mp3',
-    'Ann Powers': '/npr/specialmusic/2015/06/20150626_specialmusic_annpowers.mp3',
-    'Ali Shaheed Muhammad': '/npr/specialmusic/2015/06/20150626_specialmusic_alishaheedmuhammad.mp3',
-    'Jason King': '/npr/specialmusic/2015/06/20150626_specialmusic_jasonking.mp3',
-    'David Dye': '/npr/specialmusic/2015/06/20150626_specialmusic_daviddye.mp3',
-    'Rita Houston': '/npr/specialmusic/2015/06/20150626_specialmusic_ritahouston.mp3',
-    'Anastasia Tsioulcas': '/npr/specialmusic/2015/06/20150626_specialmusic_anastasiatsioulcas.mp3',
-    'Felix Contreras': '/npr/specialmusic/2015/06/20150626_specialmusic_felixc.mp3',
-    'Kevin Cole': '/npr/specialmusic/2015/06/20150626_specialmusic_kevincole.mp3'
-}
 
 SKIP_LIMIT = 6
-
 FEATURED_LIMIT = 2
 
 """
