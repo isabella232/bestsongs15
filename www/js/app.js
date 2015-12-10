@@ -301,6 +301,8 @@ var playNextSong = function() {
         if (!canPlaySong) {
             return;
         }
+    } else {
+        return;
     }
 
     var nextsongURL = 'http://podcastdownload.npr.org/anon.npr-mp3' + nextSong['media_url'] + '.mp3';
