@@ -23,6 +23,7 @@
 	{% for song in genre_songs %}
 		<p><strong>{{ song.artist }}, "{{ song.title }}"</strong></p>
 		<p>{{ song.reviews[0].review }}</p>
+		<p><em>– {{ song.reviews[0].reviewer }}{% if song.reviews[0].reviewer_affiliation %}, {{ song.reviewer_affiliation }} {% endif %}</em></p>    
 	{% endfor %}
   {% endif %}
 {% endfor %}
