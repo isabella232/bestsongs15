@@ -526,6 +526,10 @@ var onSkipClick = function(e) {
 
     if (!$(this).hasClass('disabled')) {
         skipSong();
+
+        if ($fixedControls.hasClass('expand')) {
+            toggleFilterPanel();
+        }
     }
 }
 
