@@ -696,7 +696,7 @@ var buildPlaylist = function() {
     // Remove explicit songs if clean mode is active
     if (playExplicit === false) {
         currentSongData = _.reject(SONG_DATA, function(song) {
-            return song['explicit'] === 'TRUE';
+            return song['explicit'] === 'True';
         })
     }
 
@@ -1000,7 +1000,7 @@ var onLanguageChange = function(e) {
 
     buildPlaylist();
 
-    if (playExplicit === false && currentSong['explicit'] === 'TRUE') {
+    if (playExplicit === false && currentSong['explicit'] === 'True') {
         playNextSong();
     }
 }
