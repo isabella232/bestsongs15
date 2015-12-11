@@ -1403,29 +1403,58 @@ h1,h2,h3,h4,h5,h6 {
         position: absolute;
         top: 0;
         left: 5rem;
+
+        .explicit-song-label {
+            position: absolute;
+            top: -12px;
+            left: -4px;
+            display: inline-block;
+            margin-left: .3rem;
+            font-size: @font-size-base * .8;
+            color: @music-red;
+            border: 1px solid @music-red;
+            line-height: 1;
+            padding: 3px;
+            border-radius: 3px;
+            margin-top: 1px;
+            text-transform: uppercase;
+        }
+
+        .artist,
+    	.song-title-container {
+    		position: relative;
+    		z-index: @z-player-info;
+    		margin-left: @grid-gutter-width / 2;
+            line-height: 1;
+
+    	}
+
+    	.artist {
+    		font-size: @font-size-base;
+    		letter-spacing: 0.1rem;
+    		margin-top: 10px;
+    		margin-bottom: 5px;
+            visibility: hidden;
+    	}
+
+    	.song-title {
+    		font-size: @font-size-base;
+    		color: @music-medium;
+    		text-indent: 0;
+            visibility: hidden;
+    	}
+
+        @media @screen-tiny-above {
+            .song-title, .artist {
+                visibility: visible;
+            }
+
+            .explicit-song-label {
+                position: static;
+                font-size: @font-size-base * .5;
+            }
+        }
     }
-
-	.artist,
-	.song-title {
-		position: relative;
-		z-index: @z-player-info;
-		margin-left: @grid-gutter-width / 2;
-
-		.hidden-xs;
-	}
-
-	.artist {
-		font-size: @font-size-base;
-		letter-spacing: 0.1rem;
-		margin-top: 10px;
-		margin-bottom: 5px;
-	}
-
-	.song-title {
-		font-size: @font-size-base;
-		color: @music-medium;
-		text-indent: 0;
-	}
 
 	.jp-progress-container {
 		position: absolute;

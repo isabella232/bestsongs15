@@ -317,6 +317,10 @@ var playNextSong = function() {
     $playerArtist.html(nextSong['artist']);
     $playerTitle.html(nextSong['title']);
 
+    if (nextSong['explicit'] === 'True') {
+        console.log('its explicit');
+    }
+
     if (nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title']) {
         $playerTitle.addClass('no-quotes');
     } else {
