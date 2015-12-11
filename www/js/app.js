@@ -489,7 +489,10 @@ var onFiltersButtonClick = function(e) {
     e.preventDefault();
     toggleFilterPanel();
     $filtersPanel.scrollTop(0);
-    $instructions.css('opacity', 0);
+    $instructions.css({
+      "opacity": "0",
+      "z-index": "-1"
+    });
 }
 
 var onFilterTipClick = function(e) {
@@ -921,9 +924,9 @@ var hideWelcome  = function() {
         }
     })
 
-    setTimeout(function() {
-        $('.instructions').velocity('fadeOut');
-    }, 1000000);
+    // setTimeout(function() {
+    //     $('.instructions').velocity('fadeOut');
+    // }, 1000000);
 
     onWelcome = false;
 
