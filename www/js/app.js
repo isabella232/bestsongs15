@@ -337,7 +337,6 @@ var playNextSong = function() {
     if (onWelcome) {
         $html.css('min-height', songHeight).show();
         $html.find('.container-fluid').css('height', songHeight);
-
         hideWelcome();
     } else {
         setCurrentSongHeight();
@@ -819,23 +818,11 @@ var switchTag = function(tag, noAutoplay) {
 var playIntroAudio = function() {
     var audioFile = null;
 
-    // if on welcome screen, play the intro audio
-    if (onWelcome) {
-        audioFile = APP_CONFIG.WELCOME_AUDIO;
-    }
-
-    // if we have a selected tag, find its audio
-    //if (selectedTag && !onWelcome) {
-        //audioFile = APP_CONFIG.TAG_AUDIO_INTROS[selectedTag];
-    //}
-
     // if there is no audio (i.e. genres), just play the next song
     if (!audioFile) {
         playNextSong();
         return;
     }
-
-    inPreroll = true;
 
     if (!onWelcome) {
         $('.stack .poster').velocity('fadeIn');
