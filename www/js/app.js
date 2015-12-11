@@ -909,12 +909,12 @@ var hideWelcome  = function() {
                 complete: function() {
                     $songs.find('.song').last().velocity("scroll", { duration: 750,
                         offset: -fixedHeaderHeight,
-                        complete: function() {
-                            $instructions.velocity('fadeOut', {
-                                duration: 1000,
-                                delay: 7000
-                            })
-                        }
+                        // complete: function() {
+                        //     $instructions.velocity('fadeOut', {
+                        //         duration: 1000,
+                        //         delay: 7000
+                        //     })
+                        // }
                     });
                 }
             })
