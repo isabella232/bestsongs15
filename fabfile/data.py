@@ -189,7 +189,8 @@ def generate_spotify_playlist():
 @task
 def get_mp3_lengths():
     copy_data = copytext.Copy(app_config.COPY_PATH)
-    tags = [str(key) for key in copy_data['tags']._serialize().keys()]
+    tags = [str(tag['displayname']) for tag in copy_data['tags']._serialize().values()]
+    total_seconds = 0
 
     with open('data/songs.json') as f:
         songs = json.load(f)
@@ -203,17 +204,22 @@ def get_mp3_lengths():
     for song in songs:
         link = 'http://podcastdownload.npr.org/anon.npr-mp3%s.mp3' % song['media_url']
         song['length'] = get_mp3_length(link)
+        total_seconds += song['length']
         for tag in song['genre_tags']:
             if tag in tags:
                 tag_durations[tag] += song['length']
                 tag_counts[tag] += 1
 
-    tag_durations_formatted = [format_time(hours) for hours in tag_durations.values()]
+    tag_durations_formatted = [format_time(seconds) for seconds in tag_durations.values()]
+    for k, v in tag_durations.items():
+        tag_durations[k] = v / (60 * 60)
 
     with open('data/song-lengths.csv', 'w') as f:
-        rows = zip(tags, tag_durations_formatted, tag_counts.values())
+        rows = zip(tags, tag_durations.values(), tag_durations_formatted, tag_counts.values())
         writer = csv.writer(f)
+        writer.writerow(['tag', 'duration (hours)', 'duration (formatted)', 'count'])
         writer.writerows(rows)
+        writer.writerow(['total', total_seconds / (60 * 60), format_time(total_seconds), len(songs)])
 
 def get_mp3_length(link):
     """
