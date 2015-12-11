@@ -39,9 +39,9 @@ def index():
         context['song_data'] = f.read()
         context['total_songs'] = len(json.loads(context['song_data']))
 
-    context['tags'] = context['COPY']['tags']._serialize().values()
-
-    context['TAG_SPLIT_INDEX'] = int(ceil(len(context['tags']) / 2.0))
+    tags = context['COPY']['tags']._serialize().values()
+    context['genre_tags'] = [tag for tag in tags if tag['genre'] == 'True']
+    context['playlist_tags'] = [tag for tag in tags if tag['genre'] != 'True']
 
     return make_response(render_template('index.html', **context))
 
