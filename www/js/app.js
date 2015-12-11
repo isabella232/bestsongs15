@@ -1027,12 +1027,19 @@ var onLanguageChange = function(e) {
     e.preventDefault();
 
     if ($(this).hasClass('explicit')) {
+        if (playExplicit === false) {
+            toggleFilterPanel();
+        }
+
         playExplicit = true;
         simpleStorage.set('songs15PlayExplicit', playExplicit);
         $languageStatus.addClass('explicit').text('Explicit');
 
         ANALYTICS.trackEvent('explicit-language-on');
     } else {
+        if (playExplicit === true) {
+            toggleFilterPanel();
+        }
         playExplicit = false;
         simpleStorage.set('songs15PlayExplicit', playExplicit);
         $languageStatus.removeClass('explicit').text('Clean');
