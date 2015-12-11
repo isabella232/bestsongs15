@@ -11,7 +11,7 @@
                     <div class="col-sm-6">
                         <h2>Pick A List</h2>
                         <p class="play-everything">
-                            <a href="#" class="shuffle-songs"><i class="fa fa-play"></i><strong>Play Everything</strong> {{ COPY.content.total_time }}</a>
+                            <a href="#" class="shuffle-songs"><i class="fa fa-play"></i><strong>Play Everything</strong> {{ COPY.content.total_hours }} hours</a>
                         </p>
                     </div>
                     <div class="col-sm-6 language-wrapper">
@@ -34,7 +34,7 @@
                     <ul class="tags">
                         {% for tag in genre_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.key }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.hours|int }} hours {{ tag.minutes|format_time }} minutes</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                         </li>
                         {% endfor %}
@@ -44,7 +44,7 @@
                     <ul class="tags">
                         {% for tag in playlist_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.key }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.hours|int }} hours {{ tag.minutes|format_time }} minutes</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                     </li>
                         {% endfor %}
