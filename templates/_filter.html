@@ -33,9 +33,9 @@
             <div class="row">
                 <div class="col-sm-4">
                     <ul class="tags">
-                        {% for tag in tags[:TAG_SPLIT_INDEX] %}
+                        {% for tag in genre_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">X hours</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                         </li>
                         {% endfor %}
@@ -43,9 +43,9 @@
                 </div>
                 <div class="col-sm-4 col-sm-offset-1">
                     <ul class="tags">
-                        {% for tag in tags[TAG_SPLIT_INDEX:] %}
+                        {% for tag in playlist_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">X hours</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                     </li>
                         {% endfor %}
