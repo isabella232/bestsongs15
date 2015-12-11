@@ -12,9 +12,11 @@ import os
 import requests
 import spotipy
 
+from collections import OrderedDict
 from datetime import datetime
 from fabric.api import task
 from facebook import GraphAPI
+from mutagen.mp3 import MP3
 from oauth import get_document
 from rdioapi import Rdio
 from smartypants import smartypants
@@ -182,6 +184,75 @@ def generate_spotify_playlist():
                     print 'invalid ID'
 
     print ','.join(songs)
+
+
+@task
+def get_mp3_lengths():
+    copy_data = copytext.Copy(app_config.COPY_PATH)
+    tags = [str(key) for key in copy_data['tags']._serialize().keys()]
+
+    with open('data/songs.json') as f:
+        songs = json.load(f)
+
+    tag_durations = OrderedDict()
+    tag_counts = OrderedDict()
+    for tag in tags:
+        tag_durations[tag] = 0
+        tag_counts[tag] = 0
+
+    for song in songs:
+        link = 'http://podcastdownload.npr.org/anon.npr-mp3%s.mp3' % song['media_url']
+        song['length'] = get_mp3_length(link)
+        for tag in song['genre_tags']:
+            if tag in tags:
+                tag_durations[tag] += song['length']
+                tag_counts[tag] += 1
+
+    tag_durations_formatted = [format_time(hours) for hours in tag_durations.values()]
+
+    with open('data/song-lengths.csv', 'w') as f:
+        rows = zip(tags, tag_durations_formatted, tag_counts.values())
+        writer = csv.writer(f)
+        writer.writerows(rows)
+
+def get_mp3_length(link):
+    """
+    Get length of mp3
+    """
+    try:
+        os.mkdir('.mp3-cache')
+    except OSError:
+        pass
+
+    path_parts = link.split('/')
+    filename = '-'.join(path_parts[2:])
+    filename = filename.split('?')[0]
+    filepath = os.path.join('.mp3-cache', filename)
+
+    if not os.path.isfile(filepath):
+        resp = requests.get(link)
+
+        with open(filepath, 'wb') as f:
+            for block in resp.iter_content(1024):
+                f.write(block)
+
+    audio = MP3(filepath)
+    return audio.info.length
+
+
+def format_time(audio_length):
+    """
+    Format 00:00:00 style lengths
+    """
+    minutes, seconds = divmod(audio_length, 60)
+    hours, minutes = divmod(minutes, 60)
+
+    if hours > 0:
+        length = '%02d:%02d' % (hours, minutes)
+    else:
+        length = '00:%02d' % minutes
+
+    return length
 
 @task
 def update_featured_social():
