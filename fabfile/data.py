@@ -211,6 +211,8 @@ def get_mp3_lengths():
                 tag_counts[tag] += 1
 
     tag_durations_formatted = [format_time(seconds) for seconds in tag_durations.values()]
+    for k, v in tag_durations.items():
+        tag_durations[k] = v / (60 * 60)
 
     with open('data/song-lengths.csv', 'w') as f:
         rows = zip(tags, tag_durations.values(), tag_durations_formatted, tag_counts.values())
