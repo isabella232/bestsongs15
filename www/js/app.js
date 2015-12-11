@@ -814,6 +814,48 @@ var switchTag = function(tag, noAutoplay) {
 }
 
 /*
+ * Start playing the preroll audio.
+ */
+var playIntroAudio = function() {
+    var audioFile = null;
+
+    // if on welcome screen, play the intro audio
+    if (onWelcome) {
+        audioFile = APP_CONFIG.WELCOME_AUDIO;
+    }
+
+    // if we have a selected tag, find its audio
+    //if (selectedTag && !onWelcome) {
+        //audioFile = APP_CONFIG.TAG_AUDIO_INTROS[selectedTag];
+    //}
+
+    // if there is no audio (i.e. genres), just play the next song
+    if (!audioFile) {
+        playNextSong();
+        return;
+    }
+
+    inPreroll = true;
+
+    if (!onWelcome) {
+        $('.stack .poster').velocity('fadeIn');
+        $skipsRemaining.hide();
+    }
+
+    $audioPlayer.jPlayer('setMedia', {
+        mp3: 'http://podcastdownload.npr.org/anon.npr-mp3' + audioFile
+    });
+    $playerArtist.text('');
+    $playerTitle.text('');
+
+    if (!NO_AUDIO){
+        $audioPlayer.jPlayer('play');
+    } else {
+        playNextSong();
+    }
+}
+
+/*
  * Highlight whichever tags are currently selected and clear all other highlights.
  */
 var updateTagDisplay = function() {
