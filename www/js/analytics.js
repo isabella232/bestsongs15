@@ -144,7 +144,7 @@ var ANALYTICS = (function () {
         }
 
         if (label) {
-            eventData['eventLabel'] = label;
+            eventData['eventLabel'] = label.toString();
         }
 
         if (value) {
