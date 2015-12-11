@@ -40,6 +40,7 @@ var $explicitButton = null;
 var $cleanButton = null;
 var $skipIntroButton = null;
 var $songsRemaining = null;
+var $explicitSongLabel = null;
 
 // URL params
 var NO_AUDIO = (window.location.search.indexOf('noaudio') >= 0);
@@ -113,6 +114,7 @@ var onDocumentLoad = function(e) {
     $languageStatus = $('.language-filter');
     $skipIntroButton = $('.skip-intro');
     $songsRemaining = $('.songs-remaining');
+    $explicitSongLabel = $('.explicit-song-label');
     onWindowResize();
     $landing.show();
 
@@ -318,7 +320,9 @@ var playNextSong = function() {
     $playerTitle.html(nextSong['title']);
 
     if (nextSong['explicit'] === 'True') {
-        console.log('its explicit');
+        $explicitSongLabel.addClass('show-explicit-label');
+    } else {
+        $explicitSongLabel.removeClass('show-explicit-label');
     }
 
     if (nextSong['title'].match(':') && nextSong['title'].match('’') && nextSong['title']) {
