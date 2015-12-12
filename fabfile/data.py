@@ -46,7 +46,7 @@ def update_songs(verify='true'):
 def process_songs(data, verify):
 
     tagdata = copytext.Copy(app_config.COPY_PATH)['tags']._serialize()
-    genre_tags = [tag['displayname'] for tag in tagdata.values()]
+    genre_tags = tagdata.keys()
 
     output = []
     unique_audio = []
@@ -84,9 +84,8 @@ def process_songs(data, verify):
 
         for tag in song['genre_tags'].split(','):
             tag = tag.strip()
-            defined_tag = tagdata.get(tag)
-            if defined_tag:
-                tags.append(defined_tag['displayname'])
+            if tag in genre_tags:
+                tags.append(tag)
             elif not defined_tag and verify:
                 print "--> Tag %s is not a valid tag" % (tag)
 

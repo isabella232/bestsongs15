@@ -39,7 +39,10 @@ def index():
         context['song_data'] = f.read()
         context['total_songs'] = len(json.loads(context['song_data']))
 
-    tags = context['COPY']['tags']._serialize().values()
+    tags = context['COPY']['tags']._serialize()
+    for key, tag in tags.items():
+        tag['key'] = key
+    tags = tags.values()
     context['genre_tags'] = [tag for tag in tags if tag['genre'] == 'True']
     context['playlist_tags'] = [tag for tag in tags if tag['genre'] != 'True']
 

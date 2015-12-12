@@ -183,19 +183,16 @@ var toTitleCase = function(str) {
  * Swap modes on hash changes.
  */
 var onHashInit = function(newHash, oldHash) {
+    var hash = newHash.split('?')[0];
     if (newHash !== '') {
-        selectedTag = newHash.replace(/[-]/g, ' ');
-        selectedTag = toTitleCase(selectedTag);
-        var buttonText = selectedTag;
-        firstReviewerSong = true;
-        reviewerDeepLink = true;
-
-        simpleStorage.set('songs15SelectedTag', selectedTag);
-
-        $('.go-wrapper a').html('Play ' + buttonText).addClass('small');
-
-        hasher.setHash('');
-        ANALYTICS.trackEvent('reviewer-deep-link', selectedTag);
+        var tag = TAGS[hash];
+        if (tag) {
+            selectedTag = hash;
+            var buttonText = tag.displayname;
+            simpleStorage.set('songs15SelectedTag', selectedTag);
+            $('.go-wrapper a').html('Play ' + buttonText).addClass('small');
+            ANALYTICS.trackEvent('playlist-deep-link', selectedTag);
+        }
     }
 }
 
@@ -695,10 +692,8 @@ var buildPlaylist = function() {
         playlist = currentSongData;
     } else {
         playlist = _.filter(currentSongData, function(song) {
-            var tags = song['genre_tags'].concat(song['curator_tags']);
-
-            for (var i = 0; i < tags.length; i++) {
-                if (selectedTag === tags[i]) {
+            for (var i = 0; i < song.genre_tags.length; i++) {
+                if (selectedTag === song.genre_tags[i]) {
                     return true;
                 }
             }
@@ -846,22 +841,15 @@ var updateTagDisplay = function() {
         $currentDj.text(allSongsText);
         $shuffleSongs.removeClass('disabled');
     } else {
-        var tag = null;
-        if (selectedTag == '\\m/ >_< \\m/') {
-            tag = selectedTag;
-        } else {
-            tag = selectedTag;
-            tag = tag.toUpperCase();
-        }
-
+        var tag = TAGS[selectedTag];
         if (!$fixedControls.hasClass('expand')) {
             $filtersButton.addClass('updated');
             _.delay(function() {
-                $currentDj.text(tag);
+                $currentDj.text(tag.displayname);
                 $filtersButton.removeClass('updated');
             }, 250)
         } else {
-            $currentDj.text(tag);
+            $currentDj.text(tag.displayname);
         }
     }
 }
@@ -955,9 +943,11 @@ var swapTapeDeck = function() {
  */
 var onGoButtonClick = function(e) {
     e.preventDefault();
+    console.log('hello');
 
     if (reviewerDeepLink === true) {
-        e.preventDefault();
+        console.log('deeplink');
+        //e.preventDefault();
         buildPlaylist();
         updateTagDisplay();
         swapTapeDeck();

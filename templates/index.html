@@ -79,5 +79,6 @@
 
 <script>
     var SONG_DATA = {{ song_data|safe }};
+    var TAGS = {{ COPY.tags._serialize()|tojson|safe }};
 </script>
 {% endblock %}
