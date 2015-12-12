@@ -943,18 +943,14 @@ var swapTapeDeck = function() {
  */
 var onGoButtonClick = function(e) {
     e.preventDefault();
-    console.log('hello');
 
     if (reviewerDeepLink === true) {
-        console.log('deeplink');
-        //e.preventDefault();
         buildPlaylist();
         updateTagDisplay();
         swapTapeDeck();
         playNextSong();
         return;
     }
-
 
     swapTapeDeck();
     $songs.find('.song').remove();
