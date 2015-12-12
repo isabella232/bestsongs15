@@ -49,3 +49,5 @@ data/songs.*
 www/assets/*
 !www/assets/assetsignore
 www/live-data/*
+data/song-lengths.csv
+.mp3-cache
