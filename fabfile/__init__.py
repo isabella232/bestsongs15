@@ -128,16 +128,16 @@ has two primary functions: Pushing flat files to S3 and deploying
 code to a remote server if required.
 """
 @task
-def update():
+def update(verify):
     """
     Update all application data not in repository (copy, assets, etc).
     """
     text.update()
     assets.sync()
-    data.update()
+    data.update(verify)
 
 @task
-def deploy(remote='origin', reload=False):
+def deploy(verify='true', remote='origin', reload=False):
     """
     Deploy the latest app to S3 and, if configured, to our servers.
     """
@@ -163,7 +163,7 @@ def deploy(remote='origin', reload=False):
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
 
-    update()
+    update(verify)
     render.render_all()
 
     # Clear files that should never be deployed

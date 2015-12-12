@@ -25,12 +25,12 @@ from twitter import Twitter, OAuth
 SONGS_SPREADSHEET_URL_TEMPLATE = 'https://docs.google.com/feeds/download/spreadsheets/Export?exportFormat=csv&key=%s'
 
 @task(default=True)
-def update():
+def update(verify='true'):
     """
     Stub function for updating app-specific data.
     """
     #update_featured_social()
-    update_songs()
+    update_songs(verify)
 
 @task
 def update_songs(verify='true'):
