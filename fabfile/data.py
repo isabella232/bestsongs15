@@ -65,10 +65,6 @@ def process_songs(data, verify):
 
         print '%s - %s' % (song['artist'], song['title'])
 
-        if song['song_art']:
-            name, ext = os.path.splitext(song['song_art'])
-            song['song_art'] = '%s-s500%s' % (name, ext)
-
         if song['title']:
             song['title'] = smartypants(song['title'])
 
