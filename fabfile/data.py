@@ -189,8 +189,8 @@ def generate_spotify_playlist():
 @task
 def get_mp3_lengths():
     copy_data = copytext.Copy(app_config.COPY_PATH)
-    tags = [str(tag['displayname']) for tag in copy_data['tags']._serialize().values()]
-    total_seconds = 0
+    tags = copy_data['tags']._serialize().keys()
+    total_minutes = 0
 
     with open('data/songs.json') as f:
         songs = json.load(f)
@@ -204,22 +204,21 @@ def get_mp3_lengths():
     for song in songs:
         link = 'http://podcastdownload.npr.org/anon.npr-mp3%s.mp3' % song['media_url']
         song['length'] = get_mp3_length(link)
-        total_seconds += song['length']
+        total_minutes += float(song['length']) / 60
         for tag in song['genre_tags']:
             if tag in tags:
-                tag_durations[tag] += song['length']
+                tag_durations[tag] += float(song['length']) / 60
                 tag_counts[tag] += 1
 
-    tag_durations_formatted = [format_time(seconds) for seconds in tag_durations.values()]
-    for k, v in tag_durations.items():
-        tag_durations[k] = v / (60 * 60)
-
     with open('data/song-lengths.csv', 'w') as f:
-        rows = zip(tags, tag_durations.values(), tag_durations_formatted, tag_counts.values())
         writer = csv.writer(f)
-        writer.writerow(['tag', 'duration (hours)', 'duration (formatted)', 'count'])
-        writer.writerows(rows)
-        writer.writerow(['total', total_seconds / (60 * 60), format_time(total_seconds), len(songs)])
+        writer.writerow(['tag', 'count', 'duration (minutes)', 'duration (hours)', 'hours', 'minutes'])
+        for tag in tags:
+            hours, minutes = split_minutes(tag_durations[tag])
+            row = [tag, tag_counts[tag], tag_durations[tag], tag_durations[tag] / 60, hours, minutes]
+            writer.writerow(row)
+        hours, minutes = split_minutes(total_minutes)
+        writer.writerow(['total', len(songs), total_minutes, total_minutes / 60, hours, minutes])
 
 def get_mp3_length(link):
     """
@@ -252,19 +251,12 @@ def get_mp3_length(link):
         print 'ERROR: Opening %s failed' % link
         return 0
 
-def format_time(audio_length):
+def split_minutes(minutes):
     """
     Format 00:00:00 style lengths
     """
-    minutes, seconds = divmod(audio_length, 60)
     hours, minutes = divmod(minutes, 60)
-
-    if hours > 0:
-        length = '%02d:%02d' % (hours, minutes)
-    else:
-        length = '00:%02d' % minutes
-
-    return length
+    return int(hours), int(minutes)
 
 @task
 def update_featured_social():
