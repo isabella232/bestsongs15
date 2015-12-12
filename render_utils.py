@@ -222,3 +222,9 @@ def smarty_filter(s):
         print 'This string failed to encode: %s' % s
         return Markup(s)
 
+def format_time_filter(s):
+    """
+    Zero pad a number for 'XX:XX' style time formatting.
+    """
+    n = int(float(str(s)))
+    return '{0:02d}'.format(n)

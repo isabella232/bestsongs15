@@ -15,7 +15,7 @@ import static
 from collections import OrderedDict
 from flask import Flask, make_response, render_template
 from math import ceil
-from render_utils import make_context, smarty_filter, urlencode_filter
+from render_utils import make_context, smarty_filter, urlencode_filter, format_time_filter
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
@@ -23,6 +23,7 @@ app.debug = app_config.DEBUG
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
+app.add_template_filter(format_time_filter, name='format_time')
 
 @app.route('/')
 @oauth.oauth_required
