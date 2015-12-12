@@ -16,7 +16,7 @@ from collections import OrderedDict
 from datetime import datetime
 from fabric.api import task
 from facebook import GraphAPI
-from mutagen.mp3 import MP3
+from mutagen.mp3 import MP3, HeaderNotFoundError
 from oauth import get_document
 from rdioapi import Rdio
 from smartypants import smartypants
@@ -95,8 +95,9 @@ def process_songs(data, verify):
         song['reviews'] = []
         for review in reviews:
             if song['id'] == review['id']:
-                review['review'] = smartypants(review['review'])
-                song['reviews'].append(review)
+                if review['review']:
+                    review['review'] = smartypants(review['review'])
+                    song['reviews'].append(review)
 
         if verify:
             # Verify links
@@ -233,18 +234,24 @@ def get_mp3_length(link):
     path_parts = link.split('/')
     filename = '-'.join(path_parts[2:])
     filename = filename.split('?')[0]
+
     filepath = os.path.join('.mp3-cache', filename)
 
     if not os.path.isfile(filepath):
+        print 'Downloading %s' % link
         resp = requests.get(link)
 
         with open(filepath, 'wb') as f:
             for block in resp.iter_content(1024):
                 f.write(block)
 
-    audio = MP3(filepath)
-    return audio.info.length
-
+    try:
+        print 'Opening %s' % link
+        audio = MP3(filepath)
+        return audio.info.length
+    except HeaderNotFoundError:
+        print 'ERROR: Opening %s failed' % link
+        return 0
 
 def format_time(audio_length):
     """
