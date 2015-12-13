@@ -20,6 +20,14 @@ def confirm(message):
         exit()
 
 
+def confirm_bool(message):
+    """
+    Verify a users intentions.
+    """
+    answer = prompt(message, default="Not at all")
+    return answer.lower() in ('y', 'yes', 'buzz off', 'screw you')
+
+
 def get_bucket(bucket_name):
     """
     Established a connection and gets s3 bucket

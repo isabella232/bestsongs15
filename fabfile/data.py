@@ -19,8 +19,12 @@ from facebook import GraphAPI
 from mutagen.mp3 import MP3, HeaderNotFoundError
 from oauth import get_document
 from rdioapi import Rdio
+from shutil import copyfile
 from smartypants import smartypants
 from twitter import Twitter, OAuth
+from utils import confirm_bool
+from PIL import Image
+
 
 SONGS_SPREADSHEET_URL_TEMPLATE = 'https://docs.google.com/feeds/download/spreadsheets/Export?exportFormat=csv&key=%s'
 
@@ -253,6 +257,47 @@ def split_minutes(minutes):
     """
     hours, minutes = divmod(minutes, 60)
     return int(hours), int(minutes)
+
+@task
+def process_album_art():
+    with open('data/songs.json') as f:
+        songs = json.load(f)
+
+    filenames = []
+    for rawfilename in os.listdir('www/assets/covers-src'):
+        filename = rawfilename.split('.')[0]
+        if filename == '':
+            continue
+        if filename.endswith('-sq'):
+            filename = filename[:-3]
+        filename = filename.lower().replace('-', '')
+        filename = filename.decode('utf-8')
+        filenames.append((rawfilename, filename))
+
+    for song in songs:
+        success = False
+        id = song['id'].replace('-', '')
+        for path, filename in filenames:
+            if id == filename:
+                if not os.path.isfile('www/assets/covers/%s.jpg' % song['id']):
+                    image = Image.open('www/assets/covers-src/%s' % path).convert('RGB')
+                    image.thumbnail((500, 500), Image.ANTIALIAS)
+                    image.save('www/assets/covers/%s.jpg' % song['id'], optimize=True)
+                success = True
+                break
+            elif id.startswith(filename):
+                try:
+                    createfile = confirm_bool('Is www/assets/covers-src/%s path correct for %s?' % (path, song['id'].decode('utf-8')))
+                    if createfile:
+                        os.rename('www/assets/covers-src/%s' % path, 'www/assets/covers-src/%s.jpg' % song['id'])
+                except UnicodeEncodeError:
+                    print 'dammit'
+                success = True
+                break
+
+        if not success:
+            print 'ERROR: could not find art for %s' % song['id']
+
 
 @task
 def update_featured_social():
