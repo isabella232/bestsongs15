@@ -219,7 +219,8 @@ def configure_targets(deployment_target):
         DISQUS_SHORTNAME = 'nprviz-test'
         DEBUG = True
         ASSETS_MAX_AGE = 20
-        SONGS_GOOGLE_DOC_KEY = '1ncAI-wvcPiXx_X1g8CM-0wGSYZ3c_0Cu4BQfjPD_gWM'
+        #SONGS_GOOGLE_DOC_KEY = '1ncAI-wvcPiXx_X1g8CM-0wGSYZ3c_0Cu4BQfjPD_gWM'
+        SONGS_GOOGLE_DOC_KEY = '1yEre5xDvDzCk40PX9dfUPxnULfZBjIUsp8p-9tqFe0c'
 
     DEPLOYMENT_TARGET = deployment_target
 
