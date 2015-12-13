@@ -428,9 +428,25 @@ var checkSongHistory = function(song) {
 
     songHistory[song['id']].push(moment.utc());
     simpleStorage.set('songs15SongHistory', songHistory);
-    $songsRemaining.text(SONG_DATA.length - _.size(songHistory) + ' songs remaining');
-
+    setRemaining();
     return true;
+}
+
+
+var setRemaining = function() {
+    var songHistory = simpleStorage.get('songs15SongHistory');
+    if (playExplicit) {
+        $songsRemaining.text(SONG_DATA.length - _.size(songHistory) + ' songs remaining');
+    } else {
+        var cleanHistory = _.filter(songHistory, function(song) {
+            return !song['explicit'];
+        });
+        var cleanSongs = _.filter(SONG_DATA, function(song) {
+            return !song['explicit'];
+        });
+        $songsRemaining.text((cleanSongs.length - cleanHistory.length) + ' songs remaining');
+
+    }
 }
 
 /*
@@ -1017,6 +1033,9 @@ var onLanguageChange = function(e) {
     if (playExplicit === false && currentSong['explicit'] === 'True') {
         playNextSong();
     }
+
+    setRemaining();
+    updatePlaylistLength();
 }
 
 /*
