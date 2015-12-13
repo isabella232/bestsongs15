@@ -191,6 +191,7 @@ var onHashInit = function(newHash, oldHash) {
             var buttonText = tag.displayname;
             simpleStorage.set('songs15SelectedTag', selectedTag);
             $('.go-wrapper a').html('Play ' + buttonText).addClass('small');
+            $instructions.find('b').text('Playing ' + tag.displayname);
             ANALYTICS.trackEvent('playlist-deep-link', selectedTag);
         }
     }
@@ -991,6 +992,7 @@ var onGoCleanButtonClick = function(e) {
     $languageToggle.find('.explicit').removeClass('active');
 
     $languageStatus.removeClass('explicit').text('Clean');
+    $instructions.find('b').text('Playing clean songs');
 
     if (playedSongs.length > 0 || selectedTag !== null) {
         onContinueButtonClick(e);
