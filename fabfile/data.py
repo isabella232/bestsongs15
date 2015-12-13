@@ -8,9 +8,11 @@ import codecs
 import copytext
 import csv
 import json
+import locale
 import os
 import requests
 import spotipy
+import sys
 
 from collections import OrderedDict
 from datetime import datetime
@@ -25,6 +27,7 @@ from twitter import Twitter, OAuth
 from utils import confirm_bool
 from PIL import Image
 
+sys.stdout = codecs.getwriter(locale.getpreferredencoding())(sys.stdout)
 
 SONGS_SPREADSHEET_URL_TEMPLATE = 'https://docs.google.com/feeds/download/spreadsheets/Export?exportFormat=csv&key=%s'
 
