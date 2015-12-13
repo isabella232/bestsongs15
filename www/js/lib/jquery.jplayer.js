@@ -2034,6 +2034,7 @@
 						}
 					}
 				}
+        media.title = $('.jp-title').text();
 				if(typeof media.title === 'string') {
 					if(this.css.jq.title.length) {
 						this.css.jq.title.html(media.title);
