@@ -64,7 +64,7 @@ def covers():
     context['songs'] = songs
     return make_response(render_template('covers.html', **context))
 
-@app.route('/seamus')
+@app.route('/seamus.html')
 def seamus():
     """
     Preview for Seamus page
@@ -74,22 +74,20 @@ def seamus():
     # Read the songs JSON into the page.
     with open('data/songs.json', 'rb') as readfile:
         songs_data = json.load(readfile)
-
-        for song in songs_data:
-            song['song_art'] = song['song_art'].replace('-s500', '-s200')
-
         songs = sorted(songs_data, key=lambda k: (k['artist'].lower()[4:] if k['artist'].lower().startswith('the ') else k['artist'].lower()))
 
-    tags = sorted(context['COPY']['tags']._serialize().values(), key=lambda k: k['displayname'])
+    tags = context['COPY']['tags']._serialize() #.values(), key=lambda k: k['displayname'])
     context['songs'] = _group_by_genre(songs, tags)
+    context['tags'] = tags
 
     return render_template('seamus-preview.html', **context)
 
 
 def _group_by_genre(songs, tags):
     grouped = OrderedDict()
-    for tag in tags:
-        grouped[tag['displayname']] = []
+    for key, tag in tags.items():
+        #import ipdb; ipdb.set_trace();
+        grouped[key] = []
     for song in songs:
         tag = song['genre_tags'][0]
         grouped[tag].append(song)

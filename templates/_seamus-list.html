@@ -12,7 +12,7 @@
 <p>
 {% for genre, genre_songs in songs.items() %}
   {% if genre_songs|length %}
-	<a href="#genre-{{ genre|lower|replace(' ', '')|replace('/','') }}"><strong>{{ genre }}</strong></a><br>
+	<a href="#genre-{{ genre }}"><strong>{{ tags[genre]['displayname'] }}</strong></a><br>
   {% endif %}
 {% endfor %}
 </p>
@@ -22,8 +22,10 @@
 	<a name="genre-{{ genre|lower|replace(' ', '')|replace('/','') }}"></a>
 	{% for song in genre_songs %}
 		<p><strong>{{ song.artist }}, "{{ song.title }}"</strong></p>
+    {% if song.reviews|length %}
 		<p>{{ song.reviews[0].review }}</p>
-		<p><em>– {{ song.reviews[0].reviewer }}{% if song.reviews[0].reviewer_affiliation %}, {{ song.reviewer_affiliation }} {% endif %}</em></p>    
+		<p><em>– {{ song.reviews[0].writer }}{% if song.reviews[0].reviewer_affiliation %}, {{ song.reviewer_affiliation }} {% endif %}</em></p>
+    {% endif %}
 	{% endfor %}
   {% endif %}
 {% endfor %}
