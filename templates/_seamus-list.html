@@ -41,7 +41,7 @@
     {% if song.reviews|length %}
     <br/>
     {{ song.reviews[0].review }}<br/>
-    <em>– {{ song.reviews[0].writer }}{% if song.reviews[0].reviewer_affiliation %}, {{ song.reviewer_affiliation }} {% endif %}</em>
+    <em>– {{ song.reviews[0].writer }}{% if song.reviews[0].reviewer_affiliation %}, {{ song.reviews[0].reviewer_affiliation }} {% endif %}</em>
     {% endif %}
     </p>
   {% endfor %}
