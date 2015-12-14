@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <title>Preview album covers</title>
+
+    <style>
+        img {
+            max-width: 300px;
+            height: auto;
+            float: left;
+            margin-right: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+        .song {
+            clear: both;
+            float: left;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+{% for song in songs %}
+
+<div class="song">
+    <img src="assets/covers/{{ song.id }}.jpg">
+    <h1> {{ song.artist|safe }} - "{{ song.title|safe }}"</h1>
+</div>
+<hr/>
+
+{% endfor %}
+
+</body>
+
+</html>
+
+
+

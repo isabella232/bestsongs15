@@ -49,6 +49,21 @@ def index():
 
     return make_response(render_template('index.html', **context))
 
+@app.route('/covers.html')
+def covers():
+    """
+    Preview for Seamus page
+    """
+    context = make_context()
+
+    # Read the songs JSON into the page.
+    with open('data/songs.json', 'rb') as readfile:
+        songs_data = json.load(readfile)
+        songs = sorted(songs_data, key=lambda k: (k['artist'].lower()[4:] if k['artist'].lower().startswith('the ') else k['artist'].lower()))
+
+    context['songs'] = songs
+    return make_response(render_template('covers.html', **context))
+
 @app.route('/seamus')
 def seamus():
     """
@@ -56,7 +71,7 @@ def seamus():
     """
     context = make_context()
 
-    # Read the books JSON into the page.
+    # Read the songs JSON into the page.
     with open('data/songs.json', 'rb') as readfile:
         songs_data = json.load(readfile)
 
