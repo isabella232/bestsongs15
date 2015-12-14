@@ -1,3 +1,16 @@
+<style>
+.genre-hed {
+    font-family: 'Gotham SSm', Helvetica, Arial, sans-serif;
+    font-size: 4rem;
+    font-weight: 100;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 2rem 1rem;
+    background-color: #955;
+    color: #fff;
+}
+</style>
+
 <div class="app-promo">
 	<p>We made you a mixtape. A really long mixtape. In the past, we've kept this list, of our favorite songs of the year, to 100 songs. A nice, round, semi-arbitrary number that always meant leaving out dozens of our favorites.</p>
 	<p>Not this year. Instead, we turned our tidy list of songs into a massive, party-starting player in which you can actually listen to every single one of the 302 songs we loved this year, from every genre we cover. You'll find a 19-minute doom-metal epic and a few two-minute punk explosions. Classic-sounding R&B and Vine-inspiring hip-hop. Ecstatic choruses and devastating harmonies. Beats from around the world and unwavering political folk from here at home and plenty more that blurred the boundaries.</p>
@@ -20,6 +33,8 @@
 {% for genre, genre_songs in songs.items() %}
   {% if genre_songs|length %}
 	<a name="genre-{{ genre|lower|replace(' ', '')|replace('/','') }}"></a>
+  <h1 class="genre-hed">{{ tags[genre]['displayname'] }}</h1>
+
 	{% for song in genre_songs %}
 		<p><strong>{{ song.artist }}, "{{ song.title }}"</strong></p>
     {% if song.reviews|length %}

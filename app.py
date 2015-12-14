@@ -80,7 +80,7 @@ def seamus():
     context['songs'] = _group_by_genre(songs, tags)
     context['tags'] = tags
 
-    return render_template('seamus-preview.html', **context)
+    return make_response(render_template('seamus-preview.html', **context))
 
 
 def _group_by_genre(songs, tags):
