@@ -128,7 +128,7 @@ has two primary functions: Pushing flat files to S3 and deploying
 code to a remote server if required.
 """
 @task
-def update(verify):
+def update(verify='true'):
     """
     Update all application data not in repository (copy, assets, etc).
     """

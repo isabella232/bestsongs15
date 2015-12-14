@@ -89,7 +89,7 @@ def process_songs(data, verify):
             tag = tag.strip()
             if tag in genre_tags:
                 tags.append(tag)
-            elif not defined_tag and verify:
+            elif verify:
                 print "--> Tag %s is not a valid tag" % (tag)
 
         song['genre_tags'] = tags
