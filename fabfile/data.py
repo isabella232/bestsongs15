@@ -187,6 +187,8 @@ def get_mp3_lengths():
     copy_data = copytext.Copy(app_config.COPY_PATH)
     tags = copy_data['tags']._serialize().keys()
     total_minutes = 0
+    clean_minutes = 0
+    clean_count = 0
 
     with open('data/songs.json') as f:
         songs = json.load(f)
@@ -201,6 +203,10 @@ def get_mp3_lengths():
         link = 'http://podcastdownload.npr.org/anon.npr-mp3%s.mp3' % song['media_url']
         song['length'] = get_mp3_length(link)
         total_minutes += float(song['length']) / 60
+        if song['explicit'] != 'True':
+            clean_minutes += float(song['length']) / 60
+            clean_count += 1
+
         for tag in song['genre_tags']:
             if tag in tags:
                 tag_durations[tag] += float(song['length']) / 60
@@ -215,6 +221,7 @@ def get_mp3_lengths():
             writer.writerow(row)
         hours, minutes = split_minutes(total_minutes)
         writer.writerow(['total', len(songs), total_minutes, total_minutes / 60, hours, minutes])
+        writer.writerow(['clean total', clean_count, clean_minutes, '', '', ''])
 
 def get_mp3_length(link):
     """
