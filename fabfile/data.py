@@ -109,14 +109,12 @@ def process_songs(data, verify):
 
                 if audio_request.status_code != 200:
                     print '--> %s The audio URL is invalid: %s' % (audio_request.status_code, audio_link)
-
-                song_art_link = 'http://stage-apps.npr.org/best-songs-2015/assets/covers/%s.jpg' % song['id']
-                song_art_request = requests.head(song_art_link)
-
-                if song_art_request.status_code != 200:
-                    print '--> %s The song art URL is invalid: %s' % (song_art_request, song_art_link)
             except:
                 print '--> request.head failed'
+
+            song_art_path = 'www/assets/covers/%s.jpg' % song['id']
+            if not os.path.isfile(song_art_path):
+                print '--> The song art does not exist: %s' % song_art_path
 
             if song['media_url'] in unique_audio:
                 print '--> Duplicate audio url: %s' % song['media_url']
