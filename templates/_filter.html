@@ -34,7 +34,7 @@
                     <ul class="tags">
                         {% for tag in genre_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.key }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                         </li>
                         {% endfor %}
@@ -44,7 +44,7 @@
                     <ul class="tags">
                         {% for tag in playlist_tags %}
                         <li>
-                            <p><a class="disabled genre-btn" data-tag="{{ tag.displayname }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
+                            <p><a class="disabled genre-btn" data-tag="{{ tag.key }}" href="#"><span class="play-icon"></span> {{ tag.displayname }} <span class="tag-length">{{ tag.length }}</span></a></p>
                             <p class="list-artists">{{ tag.recommendedtext }}</p>
                     </li>
                         {% endfor %}
