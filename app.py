@@ -89,6 +89,7 @@ def _group_by_genre(songs, tags):
         #import ipdb; ipdb.set_trace();
         grouped[key] = []
     for song in songs:
+        print 'grouping %s' % song['id']
         tag = song['genre_tags'][0]
         grouped[tag].append(song)
 
