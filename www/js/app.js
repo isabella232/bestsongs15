@@ -189,10 +189,9 @@ var onHashInit = function(newHash, oldHash) {
         if (tag) {
             reviewerDeepLink = true;
             selectedTag = hash;
-            var buttonText = tag.displayname;
             simpleStorage.set('songs15SelectedTag', selectedTag);
             $('.go-wrapper a').html('Play ' + buttonText + ' <i class="fa fa-play"></i>').addClass('small');
-            $instructions.find('b').text('Playing ' + tag.displayname);
+            $instructions.find('b').text('We\'re currently playing ' + tag.displayName + ' Songs We Love.');
             ANALYTICS.trackEvent('playlist-deep-link', selectedTag);
         }
     }
@@ -990,7 +989,7 @@ var onGoCleanButtonClick = function(e) {
     $languageToggle.find('.explicit').removeClass('active');
 
     $languageStatus.removeClass('explicit').text('Clean');
-    $instructions.find('b').text('Playing clean songs');
+    $instructions.find('b').text('We\'re currently playing all ' + COPY.content.clean_time + ' of clean Songs We Love.');
 
     if (playedSongs.length > 0 || selectedTag !== null) {
         onContinueButtonClick(e);
