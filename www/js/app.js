@@ -187,6 +187,7 @@ var onHashInit = function(newHash, oldHash) {
     if (newHash !== '') {
         var tag = TAGS[hash];
         if (tag) {
+            reviewerDeepLink = true;
             selectedTag = hash;
             var buttonText = tag.displayname;
             simpleStorage.set('songs15SelectedTag', selectedTag);
