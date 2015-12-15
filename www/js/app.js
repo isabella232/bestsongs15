@@ -216,11 +216,6 @@ var onAudioEnded = function(e) {
 
     if (time != 0 && time != e.jPlayer.status.duration) {
         // End fired prematurely
-        //console.log(e.jPlayer.status.currentTime);
-        //console.log(e.jPlayer.status.currentPercentAbsolute);
-        //console.log(e.jPlayer.status.currentPercentRelative);
-        //console.log(e.jPlayer.status.duration);
-
         // Try to restart
         $audioPlayer.jPlayer('play');
     }
