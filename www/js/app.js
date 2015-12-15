@@ -193,6 +193,7 @@ var onHashInit = function(newHash, oldHash) {
             simpleStorage.set('songs15SelectedTag', selectedTag);
             $('.go-wrapper a').html('Play ' + buttonText + ' <i class="fa fa-play"></i>').addClass('small');
             $instructions.find('b').text('Playing ' + tag.displayname);
+            hasher.setHash('');
             ANALYTICS.trackEvent('playlist-deep-link', selectedTag);
         }
     }
