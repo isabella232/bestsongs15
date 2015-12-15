@@ -190,8 +190,8 @@ var onHashInit = function(newHash, oldHash) {
             reviewerDeepLink = true;
             selectedTag = hash;
             simpleStorage.set('songs15SelectedTag', selectedTag);
-            $('.go-wrapper a').html('Play ' + buttonText + ' <i class="fa fa-play"></i>').addClass('small');
-            $instructions.find('b').text('We\'re currently playing ' + tag.displayName + ' Songs We Love.');
+            $('.go-wrapper a').html('Play ' + tag.displayname + ' <i class="fa fa-play"></i>').addClass('small');
+            $instructions.find('b').text('We\'re currently playing ' + tag.displayname + ' Songs We Love.');
             ANALYTICS.trackEvent('playlist-deep-link', selectedTag);
         }
     }
