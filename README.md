@@ -1,8 +1,3 @@
-Copyright 2015 NPR.  All rights reserved.  No part of these materials may be reproduced, modified, stored in a retrieval system, or retransmitted, in any form or by any means, electronic, mechanical or otherwise, without prior written permission from NPR.
-
-(Want to use this code? Send an email to nprapps@npr.org!)
-
-
 bestsongs15
 ========================
 
@@ -32,6 +27,8 @@ What is this?
 -------------
 
 The best songs of 2015.
+
+This code is open source under the MIT license. See LICENSE for complete details.
 
 Assumptions
 -----------
